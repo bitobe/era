@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Сценарии применения · ЭРАЛИДЕР</title>
+  <meta name="description" content="6 управленческих задач, в которых работает ЭРАЛИДЕР: подбор C-level, преемники, диагностика команды, слияния и поглощения, выгорание, трансформация." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── TOKENS ── */
+    :root {
+      --ink: #000808;
+      --ink-80: rgba(0,8,8,0.80);
+      --ink-60: rgba(0,8,8,0.60);
+      --ink-45: rgba(0,8,8,0.45);
+      --ink-30: rgba(0,8,8,0.28);
+      --ink-15: rgba(0,8,8,0.14);
+      --paper: #ffffff;
+      --paper-warm: #fafaf8;
+      --line: #dfe0e2;
+      --line-soft: #ecedee;
+      --sand: #c2b79f;
+      --sky:  #98a7d5;
+      --leaf: #95bd99;
+
+      --font-display: 'TT Firs Neue', 'Onest', 'Manrope', system-ui, sans-serif;
+      --font-body:    'Montserrat', system-ui, sans-serif;
+
+      --radius:   2px;
+      --container: 1240px;
+      --gutter: 28px;
+    }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: clip;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    .display, h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    h1 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.015em; }
+    h2 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 700; }
+    h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: 0; text-transform: none; line-height: 1.25; }
+    h4 { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45); }
+
+    p { color: var(--ink-80); }
+
+    .wordmark { font-family: var(--font-display); font-weight: 700; letter-spacing: 0; text-transform: uppercase; }
+    .wordmark .light { font-weight: 300; }
+
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+
+    .eyebrow {
+      display: inline-flex; align-items: center;
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--ink-45);
+    }
+    .eyebrow.dark { color: rgba(255,255,255,0.45); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 22px;
+      font-family: var(--font-body); font-size: 13px; font-weight: 600;
+      letter-spacing: 0.02em;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      cursor: pointer; transition: all 0.18s ease;
+      background: transparent; color: var(--ink);
+      text-decoration: none;
+    }
+    .btn .arr {
+      display: inline-flex; width: 14px; height: 14px;
+      align-items: center; justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    .btn:hover .arr { transform: translate(2px, -2px); }
+    .btn-primary { background: rgb(149, 189, 153); color: #ffffff; border-color: rgb(149, 189, 153); }
+    .btn-primary:hover { background: rgb(125, 168, 130); border-color: rgb(125, 168, 130); }
+    .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+    .btn-onDark { border-color: rgba(255,255,255,0.22); color: #fff; }
+    .btn-onDark:hover { background: #fff; color: var(--ink); border-color: #fff; }
+    .btn-glass {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+    }
+    .btn-glass:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.32); }
+    .btn-sm { padding: 12px 18px; font-size: 12px; }
+    .btn-lg { padding: 18px 26px; font-size: 14px; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 90;
+      background: rgba(255,255,255,0.86);
+      backdrop-filter: saturate(140%) blur(14px);
+      -webkit-backdrop-filter: saturate(140%) blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 32px; }
+    .nav-logo { display: inline-flex; align-items: center; gap: 12px; }
+    .nav-logo .mark { width: 30px; height: 30px; flex: 0 0 30px; }
+    .nav-logo .word { font-size: 19px; line-height: 1; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 14px; font-weight: 500; color: var(--ink-80);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    .nav-links a.active { font-weight: 600; }
+    .nav-cta { display: flex; align-items: center; gap: 10px; }
+    .nav-cta .btn { padding: 12px 20px; font-size: 13px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero { position: relative; padding: 64px 0 56px; background: var(--paper); }
+    .page-hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .page-hero-left { display: flex; flex-direction: column; }
+    .page-hero-eyebrow-row { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+    .page-hero h1 { margin-bottom: 24px; max-width: 720px; }
+    .page-hero h1 .lite { font-weight: 300; }
+    .page-hero-lead {
+      font-size: 16px; color: var(--ink-60);
+      max-width: 560px; line-height: 1.4; margin: 0;
+    }
+    .page-hero-art {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-width: 460px;
+      justify-self: end;
+    }
+    .page-hero-art img { width: 100%; height: 100%; object-fit: contain; }
+
+    .breadcrumb-pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45);
+    }
+    .breadcrumb-pill a { color: var(--ink-45); transition: color 0.15s; }
+    .breadcrumb-pill a:hover { color: var(--ink); }
+    .breadcrumb-pill .sep { color: var(--ink-30); }
+    .breadcrumb-pill .current { color: var(--ink); }
+
+    .page-hero-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      margin-top: 64px;
+    }
+    .page-hero-stat {
+      padding: 24px 26px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+    .page-hero-stat-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45); margin-bottom: 14px;
+    }
+    .page-hero-stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 1.9vw, 1.6rem);
+      font-weight: 700; line-height: 1;
+      letter-spacing: -0.02em; color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    /* ── SIDEBAR (left tabs like Методология) ── */
+    .scenarios-layout {
+      display: grid; grid-template-columns: 260px 1fr;
+      gap: 72px;
+      padding: 96px 0 120px;
+    }
+    .scenarios-sidebar {
+      position: sticky; top: 96px;
+      align-self: start;
+    }
+    .scenarios-sidebar-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45);
+      padding-bottom: 14px; margin-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .scenarios-sidebar-nav { display: flex; flex-direction: column; }
+    .scenarios-sidebar-item {
+      font-size: 13px; font-weight: 500; color: var(--ink-60);
+      padding: 12px 0 12px 16px;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .scenarios-sidebar-item a { color: inherit; display: block; }
+    .scenarios-sidebar-item:hover { color: var(--ink); }
+    .scenarios-sidebar-item.active { color: var(--ink); border-left-color: var(--leaf); font-weight: 700; }
+    .scenarios-sidebar-num {
+      font-family: var(--font-display);
+      font-size: 10px; color: var(--ink-45);
+      margin-right: 10px; letter-spacing: 0.05em;
+    }
+    .scenarios-sidebar-item.active .scenarios-sidebar-num { color: var(--ink); }
+
+    /* ── SCENARIOS BODY ── */
+    .scenarios-body { display: flex; flex-direction: column; gap: 96px; }
+    .scenario-section {
+      scroll-margin-top: 96px;
+    }
+
+    .scenario-header {
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 40px;
+    }
+    .scenario-eyebrow {
+      display: inline-flex; align-items: center;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45);
+      margin-bottom: 14px;
+    }
+    .scenario-title { margin-bottom: 18px; max-width: 760px; }
+    .scenario-title .lite { font-weight: 300; }
+    .scenario-lead { font-size: 16px; color: var(--ink-60); line-height: 1.4; margin-bottom: 28px; max-width: 720px; }
+
+    /* meta cards row */
+    .scenario-meta-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+      max-width: 920px;
+    }
+    .meta-card {
+      background: #f4f4f2;
+      padding: 22px 22px 24px;
+      display: flex; flex-direction: column;
+      gap: 16px;
+      min-height: 130px;
+    }
+    .meta-card-icon {
+      width: 36px; height: 36px;
+      background: var(--paper);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--ink);
+      flex: 0 0 36px;
+    }
+    .meta-card-icon svg { width: 18px; height: 18px; }
+    .meta-card-text { display: flex; flex-direction: column; gap: 6px; }
+    .meta-card-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45);
+    }
+    .meta-card-value {
+      font-size: 13.5px; font-weight: 600; color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .scenario-header-cta { display: inline-flex; margin-top: 8px; }
+
+    /* Content blocks */
+    .scenario-blocks { display: flex; flex-direction: column; }
+    .scenario-block {
+      padding: 32px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .scenario-block:last-child { border-bottom: none; }
+    .block-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45);
+      padding-top: 4px;
+    }
+    .scenario-block-body h3 { margin-bottom: 14px; font-size: 19px; line-height: 1.4; color: var(--ink); }
+    .scenario-block-body p {
+      font-size: 15px; color: var(--ink-60); line-height: 1.4;
+      margin-bottom: 12px; max-width: 760px;
+    }
+    .scenario-block-body p:last-child { margin-bottom: 0; }
+    .scenario-block-body ul {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 12px; margin-top: 16px; max-width: 760px;
+    }
+    .scenario-block-body li {
+      font-size: 14.5px; color: var(--ink-60);
+      padding-left: 22px; position: relative; line-height: 1.4;
+    }
+    .scenario-block-body li::before {
+      content: ''; position: absolute;
+      left: 0; top: 11px;
+      width: 6px; height: 6px;
+      background: var(--leaf);
+    }
+    .scenario-block-body ul li:nth-child(3n+2)::before { background: var(--sky); }
+    .scenario-block-body ul li:nth-child(3n)::before { background: var(--sand); }
+    .scenario-block-body li strong { color: var(--ink); font-weight: 600; }
+
+    /* Testimonial as quote block */
+    .scenario-testimonial {
+      padding: 32px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .scenario-testimonial:last-child { border-bottom: none; }
+    .testimonial-quote {
+      position: relative;
+      background: rgba(152, 167, 213, 0.10);
+      border-left: 3px solid var(--sky);
+      padding: 24px 28px 24px 32px;
+      max-width: 820px;
+    }
+    .testimonial-quote::before {
+      content: '“';
+      position: absolute;
+      top: 2px; left: 14px;
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      line-height: 1;
+      color: var(--sky);
+      opacity: 0.55;
+    }
+    .testimonial-text {
+      font-size: 16px; color: var(--ink);
+      line-height: 1.4; font-weight: 500;
+      padding-left: 32px;
+      margin-bottom: 12px;
+    }
+    .testimonial-author {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-45);
+      padding-left: 32px;
+    }
+
+    /* ── CTA BOTTOM ── */
+    .cta-bottom {
+      background: var(--ink); color: var(--paper);
+      padding: 96px 0;
+      position: relative; overflow: hidden;
+    }
+    .cta-bottom::before {
+      content: ''; position: absolute;
+      right: -40px; top: 50%; transform: translateY(-50%);
+      width: 380px; height: 380px;
+      background: url('assets/3d/prism-solid-tetra.png') center / contain no-repeat;
+      opacity: 0.95; pointer-events: none;
+    }
+    .cta-bottom .container { position: relative; z-index: 1; }
+    .cta-bottom-inner {
+      display: grid; grid-template-columns: 1.4fr auto;
+      gap: 48px; align-items: end;
+    }
+    .cta-bottom .eyebrow { color: rgba(255,255,255,0.45); margin-bottom: 18px; display: inline-flex; }
+    .cta-bottom h2 { color: var(--paper); max-width: 720px; }
+    .cta-bottom h2 .lite { font-weight: 300; }
+    .cta-bottom p { color: rgba(255,255,255,0.6); font-size: 16px; margin-top: 18px; max-width: 540px; line-height: 1.4; }
+    .cta-bottom-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+    .cta-bottom-actions .btn { width: auto; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--ink); color: var(--paper);
+      padding: 80px 0 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-inner {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 80px;
+    }
+    .footer-logo { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .footer-logo .mark { width: 32px; height: 32px; color: #fff; }
+    .footer-logo .word { color: #fff; font-size: 20px; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.4; max-width: 320px; }
+    .footer-col h4 { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 18px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,0.7); transition: color 0.15s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
+    .footer-legal { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.45); }
+    .footer-legal a:hover { color: #fff; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1080px) {
+      .scenarios-layout { grid-template-columns: 1fr; gap: 32px; padding-top: 56px; }
+      .scenarios-sidebar { display: none; }
+      .page-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .page-hero-art { max-width: 320px; justify-self: start; order: -1; }
+      .page-hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .scenario-meta-row { grid-template-columns: repeat(2, 1fr); }
+      .scenario-block { grid-template-columns: 1fr; gap: 14px; }
+      .scenario-testimonial { grid-template-columns: 1fr; gap: 14px; }
+      .cta-bottom-inner { grid-template-columns: 1fr; align-items: start; }
+      .cta-bottom-actions { align-items: flex-start; }
+    }
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      :root { --gutter: 20px; }
+      .page-hero-stats { grid-template-columns: 1fr; }
+      .scenario-meta-row { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .nav-cta .btn { padding: 10px 14px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="era-mark" viewBox="0 0 200 200">
+      <g fill="currentColor">
+        <path d="M176.01 128.21v11.64c0 1.39-.98 3.1-2.19 3.79l-62.93 36.35c-1.2.7-3.17.7-4.38 0l-44.03-25.41c-1.2-.7-1.61-2.24-.9-3.44l13.85-23.29c.71-1.19 2.43-2.17 3.82-2.17h94.24c1.39 0 2.53 1.14 2.53 2.53z"/>
+        <path d="M104.26 62.53l-13.24-23.64c-.68-1.21-2.22-1.64-3.42-.94l-44.02 25.43c-1.2.7-2.19 2.4-2.19 3.79v72.68c0 1.39.99 3.1 2.19 3.79l10.08 5.82c1.2.7 2.76.28 3.45-.92l47.12-81.61c.7-1.2.71-3.18.03-4.39z"/>
+        <path d="M173.85 63.39l-62.96-36.35c-1.2-.7-3.17-.7-4.38 0l-10.08 5.82c-1.2.69-1.62 2.25-.92 3.45l47.12 81.61c.69 1.2 2.4 2.2 3.79 2.22l27.09.35c1.39.02 2.53-1.11 2.53-2.5v-50.82c0-1.39-.98-3.1-2.19-3.79z"/>
+      </g>
+    </symbol>
+    <symbol id="arr-ne" viewBox="0 0 14 14">
+      <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" fill="none"/>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24">
+      <path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm7 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM1 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1H1zm17 0v-1a7 7 0 0 0-2-4.9 5 5 0 0 1 7 4.9v1h-5z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm1-13h-2v6l5 3 1-1.7-4-2.4V7z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24">
+      <path d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4H3V4zm0 6h7v11H4a1 1 0 0 1-1-1V10zm9 0h9v10a1 1 0 0 1-1 1h-8V10z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM7 13h10v2H7v-2zm0 4h7v2H7v-2zm0-8h4v2H7V9z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="Главная страница.html" class="nav-logo">
+        <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
+        <span class="word wordmark">ЭРА<span class="light">ЛИДЕР</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="Главная страница.html">Главная</a></li>
+        <li><a href="Задачи.html" class="active">Задачи</a></li>
+        <li><a href="Методология.html">Методология</a></li>
+        <li><a href="Отчёты.html">Отчёты</a></li>
+        <li><a href="Сертификация.html">Сертификация</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="/contact" class="btn btn-primary">Связаться с нами <svg class="arr"><use href="#arr-ne"/></svg></a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-grid">
+      <div class="page-hero-left">
+        <div class="page-hero-eyebrow-row">
+          <div class="breadcrumb-pill">
+            <a href="Главная страница.html">Главная</a>
+            <span class="sep">/</span>
+            <span class="current">Сценарии применения</span>
+          </div>
+        </div>
+        <h1>Шесть задач,<br/><span class="lite">в&nbsp;которых нельзя ошибиться</span></h1>
+        <p class="page-hero-lead">ЭРАЛИДЕР гибко работает на&nbsp;конкретные управленческие решения. Под каждый сценарий&nbsp;— свой комплект отчётов, своя сессия с&nbsp;экспертом, свой формат презентации результатов.</p>
+      </div>
+      <div class="page-hero-art" aria-hidden="true">
+        <img src="assets/3d/prism-cross-triangles.png" alt="" />
+      </div>
+    </div>
+
+    <div class="page-hero-stats">
+      <div class="page-hero-stat">
+        <div class="page-hero-stat-label">Сценариев</div>
+        <div class="page-hero-stat-num">6</div>
+      </div>
+      <div class="page-hero-stat">
+        <div class="page-hero-stat-label">Под одну задачу</div>
+        <div class="page-hero-stat-num">3 опросника</div>
+      </div>
+      <div class="page-hero-stat">
+        <div class="page-hero-stat-label">Сессия с&nbsp;экспертом</div>
+        <div class="page-hero-stat-num">60–90 мин</div>
+      </div>
+      <div class="page-hero-stat">
+        <div class="page-hero-stat-label">Срок проекта</div>
+        <div class="page-hero-stat-num">2–6 недель</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIOS -->
+<div class="container">
+  <div class="scenarios-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="scenarios-sidebar">
+      <div class="scenarios-sidebar-label">Сценарии</div>
+      <nav class="scenarios-sidebar-nav">
+        <div class="scenarios-sidebar-item"><a href="#csuite"><span class="scenarios-sidebar-num">01</span>Подбор C-level</a></div>
+        <div class="scenarios-sidebar-item"><a href="#successors"><span class="scenarios-sidebar-num">02</span>Преемники</a></div>
+        <div class="scenarios-sidebar-item"><a href="#team"><span class="scenarios-sidebar-num">03</span>Диагностика команды</a></div>
+        <div class="scenarios-sidebar-item"><a href="#mna"><span class="scenarios-sidebar-num">04</span>Слияния и поглощения</a></div>
+        <div class="scenarios-sidebar-item"><a href="#burnout"><span class="scenarios-sidebar-num">05</span>Выгорание</a></div>
+        <div class="scenarios-sidebar-item"><a href="#transformation"><span class="scenarios-sidebar-num">06</span>Трансформация</a></div>
+      </nav>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="scenarios-body">
+
+    <!-- 01 C-LEVEL -->
+    <section class="scenario-section" id="csuite">
+      <div class="scenario-header">
+          <span class="scenario-eyebrow">Сценарий 01 · Подбор C-level</span>
+          <h2 class="scenario-title">Подбор<br/><span class="lite">на C-level</span></h2>
+          <p class="scenario-lead">Объективный выбор первого лица или директора-направления&nbsp;— без опоры на&nbsp;интуицию, харизму и&nbsp;«лояльность к&nbsp;акционеру».</p>
+          <div class="scenario-meta-row">
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-users"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Для кого</div>
+                <div class="meta-card-value">CEO, акционер, HR-директор</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-clock"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Срок</div>
+                <div class="meta-card-value">3–4 недели</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-layout"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Формат</div>
+                <div class="meta-card-value">Индивидуальный ассессмент</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-doc"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Отчёты</div>
+                <div class="meta-card-value">Полный + сводный</div>
+              </div>
+            </div>
+          </div>
+          <a href="/contact" class="btn btn-primary btn-sm scenario-header-cta">Разбор кейса с&nbsp;экспертом <svg class="arr"><use href="#arr-ne"/></svg></a>
+        </div>
+
+      <div class="scenario-blocks">
+        <div class="scenario-block">
+          <div class="block-label">Что измеряем</div>
+          <div class="scenario-block-body">
+            <h3>Устойчивость к&nbsp;стрессу, мотивацию под масштаб задачи, готовность к&nbsp;непопулярным решениям.</h3>
+            <p>Кандидат на&nbsp;C-level должен не&nbsp;просто «уметь руководить»&nbsp;— он должен выдерживать давление акционеров, сохранять управленческую устойчивость в&nbsp;сложной корпоративной среде и&nbsp;реализовывать решения в&nbsp;условиях ограниченной поддержки. ЭРАЛИДЕР оценивает это через комбинацию 6 личностных черт + 8 мотиваторов + 11 деструкторов.</p>
+            <ul>
+              <li><strong>Личность:</strong> оцениваем критичные факторы для C-level в&nbsp;зависимости от&nbsp;специфики отрасли и&nbsp;управленческой позиции</li>
+              <li><strong>Мотивация:</strong> отличаем «власть ради влияния» от&nbsp;«власть ради автономии» и&nbsp;«достижение» от&nbsp;«признания»</li>
+              <li><strong>Деструкторы:</strong> прогнозируем 11 типовых паттернов, которые проявятся под давлением</li>
+            </ul>
+          </div>
+        </div>
+        <div class="scenario-block">
+          <div class="block-label">Как работает в&nbsp;проекте</div>
+          <div class="scenario-block-body">
+            <p>Тестирование 40–60 минут, глубинное управленческое интервью с&nbsp;экспертом ЭРАЛИДЕР, индивидуальный отчёт + сводный для лица, принимающего решение. Если кандидатов несколько&nbsp;— матрица сравнения по&nbsp;8 компетенциям CEO с&nbsp;весовыми коэффициентами под задачу.</p>
+          </div>
+        </div>
+        <div class="scenario-testimonial">
+          <div class="block-label">Отзыв клиента</div>
+          <div class="testimonial-quote">
+            <p class="testimonial-text">Подчеркнули основные сильные стороны и&nbsp;зоны развития руководителя. Удалось составить объективную картину профессионального поведения.</p>
+            <div class="testimonial-author">АБЗ-Дорстрой, Носанова · 2025</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 SUCCESSORS -->
+    <section class="scenario-section" id="successors">
+      <div class="scenario-header">
+          <span class="scenario-eyebrow">Сценарий 02 · Преемники</span>
+          <h2 class="scenario-title">Преемники<br/><span class="lite">и&nbsp;кадровый резерв</span></h2>
+          <p class="scenario-lead">Увидеть всех HiPo, а&nbsp;не&nbsp;только громких. Собрать пул преемников на&nbsp;3 года вперёд&nbsp;— с&nbsp;пониманием, кто на&nbsp;какую позицию готов и&nbsp;за&nbsp;какой срок.</p>
+          <div class="scenario-meta-row">
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-users"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Для кого</div>
+                <div class="meta-card-value">CEO, HR-директор</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-clock"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Срок</div>
+                <div class="meta-card-value">4–8 недель</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-layout"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Объём</div>
+                <div class="meta-card-value">15–60 руководителей</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-doc"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Отчёты</div>
+                <div class="meta-card-value">Профиль роли + ИПР</div>
+              </div>
+            </div>
+          </div>
+          <a href="/contact" class="btn btn-primary btn-sm scenario-header-cta">Разбор кейса с&nbsp;экспертом <svg class="arr"><use href="#arr-ne"/></svg></a>
+        </div>
+
+      <div class="scenario-blocks">
+        <div class="scenario-block">
+          <div class="block-label">Что измеряем</div>
+          <div class="scenario-block-body">
+            <h3>Готовность к&nbsp;роли&nbsp;— а&nbsp;не&nbsp;«потенциал вообще».</h3>
+            <p>Традиционные системы кадрового резерва ориентированы преимущественно на&nbsp;оценку текущей эффективности. ЭРАЛИДЕР отвечает на&nbsp;вопрос, кто готов к&nbsp;конкретной позиции и&nbsp;в&nbsp;какой срок. Через сопоставление профиля кандидата с&nbsp;профилем целевой роли.</p>
+            <ul>
+              <li><strong>Готовность сейчас:</strong> кандидаты, которых можно назначать в&nbsp;течение 6 месяцев</li>
+              <li><strong>Готовность к&nbsp;продвижению:</strong> кандидаты с&nbsp;горизонтом 12–24 месяца + конкретные зоны развития</li>
+              <li><strong>Скрытый потенциал:</strong> те, кого упускают традиционные системы оценки</li>
+            </ul>
+          </div>
+        </div>
+        <div class="scenario-block">
+          <div class="block-label">Что получаете</div>
+          <div class="scenario-block-body">
+            <p>Карта кадрового резерва с&nbsp;3-уровневой готовностью. Индивидуальные планы развития для каждого участника. Рекомендации по&nbsp;программам обучения, ротациям и&nbsp;менторингу. Возможность повторной оценки через 12 месяцев для трекинга прогресса.</p>
+          </div>
+        </div>
+        <div class="scenario-testimonial">
+          <div class="block-label">Отзыв клиента</div>
+          <div class="testimonial-quote">
+            <p class="testimonial-text">Результаты тестирования легли в&nbsp;основу индивидуальных планов развития руководителей. ЭРАЛИДЕР зарекомендовал себя как качественный, инновационный продукт.</p>
+            <div class="testimonial-author">Азот, Докучаева</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 TEAM -->
+    <section class="scenario-section" id="team">
+      <div class="scenario-header">
+          <span class="scenario-eyebrow">Сценарий 03 · Диагностика команды</span>
+          <h2 class="scenario-title">Диагностика<br/><span class="lite">команды</span></h2>
+          <p class="scenario-lead">Увидеть команду как систему, а&nbsp;не&nbsp;как сумму анкет. Понять, где зажимы между людьми и&nbsp;где скрытый ресурс.</p>
+          <div class="scenario-meta-row">
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-users"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Для кого</div>
+                <div class="meta-card-value">Руководитель команды</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-clock"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Срок</div>
+                <div class="meta-card-value">3–5 недель</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-layout"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Размер команды</div>
+                <div class="meta-card-value">6–25 человек</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-doc"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Отчёт</div>
+                <div class="meta-card-value">Командный профиль</div>
+              </div>
+            </div>
+          </div>
+          <a href="/contact" class="btn btn-primary btn-sm scenario-header-cta">Разбор кейса с&nbsp;экспертом <svg class="arr"><use href="#arr-ne"/></svg></a>
+        </div>
+
+      <div class="scenario-blocks">
+        <div class="scenario-block">
+          <div class="block-label">Что измеряем</div>
+          <div class="scenario-block-body">
+            <h3>Командную динамику: где взаимные усиления и&nbsp;где конфликты на&nbsp;уровне ценностей.</h3>
+            <p>Командный профиль ЭРАЛИДЕР&nbsp;— не&nbsp;среднее арифметическое индивидуальных профилей. Это карта взаимодействия: как отдельные паттерны участников складываются в&nbsp;общее поведение команды. Где разрывы в&nbsp;мотивации, где совместимость в&nbsp;стилях, где деструкторы будут провоцировать друг друга.</p>
+            <ul>
+              <li>Карта мотивационной конгруэнтности&nbsp;— кто тянет в&nbsp;одну сторону, кто в&nbsp;разные</li>
+              <li>Паттерны принятия решений&nbsp;— как команда работает с&nbsp;конфликтом и&nbsp;неопределённостью</li>
+              <li>Слепые зоны&nbsp;— какие компетенции не&nbsp;покрыты ни&nbsp;одним из&nbsp;участников</li>
+              <li>Риски выгорания и&nbsp;ухода&nbsp;— кого надо подстраховать первым</li>
+            </ul>
+          </div>
+        </div>
+        <div class="scenario-testimonial">
+          <div class="block-label">Отзыв клиента</div>
+          <div class="testimonial-quote">
+            <p class="testimonial-text">Итоговые командные отчёты дали детальную характеристику каждой из&nbsp;команд. Выявлен потенциал и&nbsp;зоны роста, рекомендации по&nbsp;работе с&nbsp;каждым сотрудником и&nbsp;кросс-функциональному взаимодействию.</p>
+            <div class="testimonial-author">Газпромнефть Снабжение, Хакимова · 2023</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 M&A -->
+    <section class="scenario-section" id="mna">
+      <div class="scenario-header">
+          <span class="scenario-eyebrow">Сценарий 04 · Слияния и&nbsp;поглощения</span>
+          <h2 class="scenario-title">Слияния, поглощения<br/><span class="lite">и&nbsp;реструктуризация</span></h2>
+          <p class="scenario-lead">Решить, кто остаётся в&nbsp;новой структуре, а&nbsp;кто уходит. Собрать команду под новый периметр без политических потерь и&nbsp;без публичных скандалов.</p>
+          <div class="scenario-meta-row">
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-users"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Для кого</div>
+                <div class="meta-card-value">Акционер, M&amp;A-команда</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-clock"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Срок</div>
+                <div class="meta-card-value">5–10 недель</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-layout"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Конфиденциальность</div>
+                <div class="meta-card-value">NDA-режим</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-doc"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Отчёты</div>
+                <div class="meta-card-value">Ограниченный доступ</div>
+              </div>
+            </div>
+          </div>
+          <a href="/contact" class="btn btn-primary btn-sm scenario-header-cta">Разбор кейса с&nbsp;экспертом <svg class="arr"><use href="#arr-ne"/></svg></a>
+        </div>
+
+      <div class="scenario-blocks">
+        <div class="scenario-block">
+          <div class="block-label">Что измеряем</div>
+          <div class="scenario-block-body">
+            <h3>Стрессовые паттерны под давлением неопределённости&nbsp;— то, что не&nbsp;видно в&nbsp;обычной работе.</h3>
+            <p>Реструктуризация&nbsp;— это длительный пик стресса для всей команды. Один и&nbsp;тот&nbsp;же руководитель в&nbsp;стабильной ситуации и&nbsp;в&nbsp;M&amp;A показывает себя по-разному. Деструкторы ЭРАЛИДЕР точно прогнозируют характер управленческих срывов и&nbsp;рисков под давлением&nbsp;— кто уйдёт в&nbsp;самосаботаж, кто в&nbsp;манипуляции, кто закроется, кто пойдёт в&nbsp;открытый конфликт.</p>
+            <ul>
+              <li>Карта рисков по&nbsp;каждому ключевому руководителю на&nbsp;период перехода</li>
+              <li>Прогноз политических коалиций в&nbsp;новой структуре</li>
+              <li>Рекомендации по&nbsp;последовательности коммуникаций</li>
+            </ul>
+          </div>
+        </div>
+        <div class="scenario-block">
+          <div class="block-label">Режим работы</div>
+          <div class="scenario-block-body">
+            <p>Все материалы&nbsp;— под NDA. Доступ к&nbsp;отчётам только у&nbsp;акционера и&nbsp;руководителя M&amp;A-проекта. Корпоративный уровень защиты данных в&nbsp;сочетании с&nbsp;экспертной презентацией результатов для руководства и&nbsp;ключевых стейкхолдеров.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 BURNOUT -->
+    <section class="scenario-section" id="burnout">
+      <div class="scenario-header">
+          <span class="scenario-eyebrow">Сценарий 05 · Выгорание</span>
+          <h2 class="scenario-title">Выгорание<br/><span class="lite">и&nbsp;риск ухода</span></h2>
+          <p class="scenario-lead">Распознать выгорание до&nbsp;заявления об&nbsp;уходе, а&nbsp;не&nbsp;после. Сохранить ключевых людей, пока не&nbsp;поздно.</p>
+          <div class="scenario-meta-row">
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-users"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Для кого</div>
+                <div class="meta-card-value">CEO, HR-директор</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-clock"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Срок</div>
+                <div class="meta-card-value">2–3 недели</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-layout"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Формат</div>
+                <div class="meta-card-value">Индивидуальный + командный</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-doc"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Результат</div>
+                <div class="meta-card-value">Снижение риска потери ключевых сотрудников</div>
+              </div>
+            </div>
+          </div>
+          <a href="/contact" class="btn btn-primary btn-sm scenario-header-cta">Разбор кейса с&nbsp;экспертом <svg class="arr"><use href="#arr-ne"/></svg></a>
+        </div>
+
+      <div class="scenario-blocks">
+        <div class="scenario-block">
+          <div class="block-label">Что измеряем</div>
+          <div class="scenario-block-body">
+            <h3>Сочетание мотивационного истощения и&nbsp;активации деструкторов&nbsp;— раннее предупреждение.</h3>
+            <p>Выгорание&nbsp;— это не&nbsp;усталость, это специфический паттерн в&nbsp;данных оценки, который можно определить по&nbsp;ключевым маркерам в&nbsp;системе ЭРАЛИДЕР: падение определённых мотиваторов, рост некоторых деструкторов. ЭРАЛИДЕР умеет это видеть на&nbsp;ранней стадии&nbsp;— за&nbsp;6–12 месяцев до&nbsp;возможного ухода.</p>
+            <ul>
+              <li>Сопоставление текущего профиля с&nbsp;базовым (если есть оценка 1–2 года назад)</li>
+              <li>Прогноз вероятности снижения вовлечённости, управленческой эффективности и&nbsp;риска ухода в&nbsp;горизонте 6–12 месяцев</li>
+              <li>Конкретные действия по&nbsp;удержанию: что менять в&nbsp;задачах, в&nbsp;окружении, в&nbsp;формате работы</li>
+            </ul>
+          </div>
+        </div>
+        <div class="scenario-testimonial">
+          <div class="block-label">Из&nbsp;материалов команды</div>
+          <div class="testimonial-quote">
+            <p class="testimonial-text">Благодаря оценке ЭРАЛИДЕР бизнес-лидеры смогли взглянуть на&nbsp;себя со&nbsp;стороны, почувствовать внутренние точки опоры, найти ресурс для новых прорывов и&nbsp;обнаружить зоны для возможного развития.</p>
+            <div class="testimonial-author">i-Teco</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 TRANSFORMATION -->
+    <section class="scenario-section" id="transformation">
+      <div class="scenario-header">
+          <span class="scenario-eyebrow">Сценарий 06 · Трансформация</span>
+          <h2 class="scenario-title">Стратегическая<br/><span class="lite">трансформация</span></h2>
+          <p class="scenario-lead">Понять, кто потянет следующий этап развития бизнеса, а&nbsp;кто&nbsp;— уже не&nbsp;сможет. Перераспределить ответственность под новую стратегию.</p>
+          <div class="scenario-meta-row">
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-users"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Для кого</div>
+                <div class="meta-card-value">CEO, собственники, совет директоров</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-clock"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Срок</div>
+                <div class="meta-card-value">6–12 недель</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-layout"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Формат</div>
+                <div class="meta-card-value">Команда + индивидуальные</div>
+              </div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-card-icon"><svg><use href="#i-doc"/></svg></div>
+              <div class="meta-card-text">
+                <div class="meta-card-label">Сопровождение</div>
+                <div class="meta-card-value">Коуч-сессии 3–6 мес</div>
+              </div>
+            </div>
+          </div>
+          <a href="/contact" class="btn btn-primary btn-sm scenario-header-cta">Разбор кейса с&nbsp;экспертом <svg class="arr"><use href="#arr-ne"/></svg></a>
+        </div>
+
+      <div class="scenario-blocks">
+        <div class="scenario-block">
+          <div class="block-label">Что измеряем</div>
+          <div class="scenario-block-body">
+            <h3>Совместимость текущей команды с&nbsp;целевой стратегией. Где придётся менять людей, а&nbsp;где&nbsp;— задачи.</h3>
+            <p>Трансформация бизнеса&nbsp;— это всегда трансформация команды. Не&nbsp;каждый, кто был успешен в&nbsp;фазе роста, потянет фазу масштабирования. Не&nbsp;каждый, кто хорошо «строит», умеет оптимизировать. ЭРАЛИДЕР сопоставляет профили команды с&nbsp;требованиями новой стратегии и&nbsp;показывает зоны разрыва.</p>
+            <ul>
+              <li>Профиль роли под новую стратегию</li>
+              <li>Анализ областей разрывов между текущей командой и&nbsp;целевыми требованиями</li>
+              <li>Сценарии: ротация, обучение, замена&nbsp;— по&nbsp;каждой ключевой позиции</li>
+              <li>Программа коуч-сопровождения на&nbsp;3–6 месяцев перехода</li>
+            </ul>
+          </div>
+        </div>
+        <div class="scenario-testimonial">
+          <div class="block-label">Отзыв клиента</div>
+          <div class="testimonial-quote">
+            <p class="testimonial-text">Выявленные деструкторы позволили увеличить скорость движения команды и&nbsp;снизить сопротивление управленцев. Удалось осознать, почему некоторые руководители были против стратегического плана, и&nbsp;перераспределить зоны ответственности.</p>
+            <div class="testimonial-author">Секретория</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- CTA BOTTOM -->
+<section class="cta-bottom">
+  <div class="container">
+    <div class="cta-bottom-inner">
+      <div>
+        <span class="eyebrow">Ваш сценарий</span>
+        <h2>Разберём ваш кейс<br/><span class="lite">на&nbsp;онлайн-встрече</span></h2>
+        <p>Соберём пример отчёта, релевантный вашей задаче. Покажем, как ЭРАЛИДЕР работает в&nbsp;вашем сценарии. Содержательный разговор с&nbsp;экспертом.</p>
+      </div>
+      <div class="cta-bottom-actions">
+        <a href="/contact" class="btn btn-glass btn-lg">Записаться на&nbsp;разбор кейса <svg class="arr"><use href="#arr-ne"/></svg></a>
+        <a href="/contact" class="btn btn-glass btn-lg">Получить презентацию с&nbsp;ценами <svg class="arr"><use href="#arr-ne"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="Главная страница.html" class="footer-logo">
+          <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
+          <span class="word wordmark">ЭРА<span class="light">ЛИДЕР</span></span>
+        </a>
+        <p class="footer-tagline">Система оценки руководителей и&nbsp;команд.<br/>ООО «Оценка и&nbsp;исследование», Санкт-Петербург, 2026 © Все права защищены</p>
+      </div>
+      <div class="footer-col">
+        <h4>Продукт</h4>
+        <ul>
+          <li><a href="Задачи.html">Сценарии применения</a></li>
+          <li><a href="Методология.html">Методология</a></li>
+          <li><a href="/reports">Отчёты</a></li>
+          <li><a href="/about">Что такое ЭРАЛИДЕР</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Компания</h4>
+        <ul>
+          <li><a href="/cases">Кейсы</a></li>
+          <li><a href="/experts">Эксперты</a></li>
+          <li><a href="/certification">Сертификация</a></li>
+          <li><a href="/materials">Исследования</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="mailto:info@era-lider.ru">info@era-lider.ru</a></li>
+          <li><a href="tel:+74999388643">+7 (499) 938-86-43</a></li>
+          <li><a href="https://t.me/era_lider">Telegram: @era_lider</a></li>
+          <li><a href="https://max.ru/id7839137584_biz">МАХ</a></li>
+          <li><a href="https://rutube.ru/channel/57267315/">RUTUBE</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© ЭРАЛИДЕР, 2026 · Реестр РПО № 28543</div>
+      <div class="footer-legal">
+        <a href="/documents">Политика конфиденциальности</a>
+        <a href="/documents">Обработка ПДн</a>
+        <a href="/documents">Документация</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sidebar active state by scroll position
+  (function() {
+    const sections = Array.from(document.querySelectorAll('.scenario-section'));
+    const items = Array.from(document.querySelectorAll('.scenarios-sidebar-item'));
+    if (!sections.length || !items.length) return;
+    const offset = 72 + 80;
+    function setActive(id) {
+      items.forEach(t => {
+        const link = t.querySelector('a');
+        t.classList.toggle('active', !!link && link.getAttribute('href') === '#' + id);
+      });
+    }
+    function update() {
+      const y = window.scrollY + offset;
+      let activeId = sections[0].id;
+      for (const s of sections) {
+        if (s.getBoundingClientRect().top + window.scrollY <= y) {
+          activeId = s.id;
+        } else {
+          break;
+        }
+      }
+      setActive(activeId);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
+</body>
+</html>

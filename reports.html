@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Отчёты ЭРАЛИДЕР · форматы и примеры</title>
+  <meta name="description" content="Форматы отчётов ЭРАЛИДЕР: индивидуальный полный, сводный краткий, командный профиль. Под разные управленческие задачи и аудитории." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── TOKENS (ERALIDER BRANDBOOK 2026) ── */
+    :root {
+      --ink: #000808;
+      --ink-80: rgba(0,8,8,0.80);
+      --ink-60: rgba(0,8,8,0.60);
+      --ink-45: rgba(0,8,8,0.45);
+      --ink-30: rgba(0,8,8,0.28);
+      --ink-15: rgba(0,8,8,0.14);
+      --paper: #ffffff;
+      --paper-warm: #fafaf8;
+      --line: #dfe0e2;
+      --line-soft: #ecedee;
+      --sand: #c2b79f;
+      --sky:  #98a7d5;
+      --leaf: #95bd99;
+
+      --font-display: 'TT Firs Neue', 'Onest', 'Manrope', system-ui, sans-serif;
+      --font-body:    'Montserrat', system-ui, sans-serif;
+
+      --radius:   2px;
+      --radius-md: 6px;
+      --radius-lg: 14px;
+
+      --container: 1240px;
+      --gutter: 28px;
+    }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: clip;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* ── DISPLAY HEADINGS ── */
+    .display, h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    h1 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.015em; }
+    h2 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 700; }
+    h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: 0; text-transform: none; line-height: 1.25; }
+    h4 { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45); }
+    p { color: var(--ink-80); }
+
+    .wordmark { font-family: var(--font-display); font-weight: 700; letter-spacing: 0; text-transform: uppercase; }
+    .wordmark .light { font-weight: 300; }
+
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+
+    /* ── EYEBROW LABEL ── */
+    .eyebrow {
+      display: inline-flex; align-items: center;
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--ink-45);
+    }
+    .eyebrow.dark { color: rgba(255,255,255,0.45); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 22px;
+      font-family: var(--font-body); font-size: 13px; font-weight: 600;
+      letter-spacing: 0.02em;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      cursor: pointer; transition: all 0.18s ease;
+      background: transparent; color: var(--ink);
+      text-decoration: none;
+    }
+    .btn .arr {
+      display: inline-flex; width: 14px; height: 14px;
+      align-items: center; justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    .btn:hover .arr { transform: translate(2px, -2px); }
+    .btn-primary { background: rgb(149, 189, 153); color: #ffffff; border-color: rgb(149, 189, 153); }
+    .btn-primary:hover { background: rgb(125, 168, 130); border-color: rgb(125, 168, 130); }
+    .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+    .btn-onDark { border-color: rgba(255,255,255,0.22); color: #fff; }
+    .btn-onDark:hover { background: #fff; color: var(--ink); border-color: #fff; }
+    .btn-glass {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+    }
+    .btn-glass:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.32); }
+    .btn-lg { padding: 18px 26px; font-size: 14px; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 90;
+      background: rgba(255,255,255,0.86);
+      backdrop-filter: saturate(140%) blur(14px);
+      -webkit-backdrop-filter: saturate(140%) blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px; gap: 32px;
+    }
+    .nav-logo { display: inline-flex; align-items: center; gap: 12px; }
+    .nav-logo .mark { width: 30px; height: 30px; flex: 0 0 30px; }
+    .nav-logo .word { font-size: 19px; line-height: 1; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 14px; font-weight: 500; color: var(--ink-80);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    .nav-links a.active { font-weight: 600; }
+    .nav-cta { display: flex; align-items: center; gap: 10px; }
+    .nav-cta .btn { padding: 12px 20px; font-size: 13px; }
+
+    /* ══════════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════════ */
+    .page-hero {
+      position: relative;
+      padding: 64px 0 56px;
+      background: var(--paper);
+    }
+    .page-hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .page-hero-left { display: flex; flex-direction: column; }
+    .page-hero-eyebrow-row { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+    .page-hero h1 { margin-bottom: 24px; max-width: 740px; }
+    .page-hero h1 .lite { font-weight: 300; }
+    .page-hero-lead {
+      font-size: 16px; color: var(--ink-60);
+      max-width: 600px; line-height: 1.5; margin: 0;
+    }
+    .page-hero-art {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-width: 460px;
+      justify-self: end;
+    }
+    .page-hero-art img { width: 100%; height: 100%; object-fit: contain; }
+
+    .breadcrumb-pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45);
+    }
+    .breadcrumb-pill a { color: var(--ink-45); transition: color 0.15s; }
+    .breadcrumb-pill a:hover { color: var(--ink); }
+    .breadcrumb-pill .sep { color: var(--ink-30); }
+    .breadcrumb-pill .current { color: var(--ink); }
+
+    .page-hero-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      margin-top: 64px;
+    }
+    .page-hero-stat {
+      padding: 24px 26px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+    .page-hero-stat-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45); margin-bottom: 14px;
+    }
+    .page-hero-stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.7rem);
+      font-weight: 700; line-height: 1;
+      letter-spacing: -0.02em; color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════════════
+       LAYOUT: SIDEBAR + CONTENT
+    ══════════════════════════════════════════ */
+    .page-body { display: grid; grid-template-columns: 260px 1fr; gap: 72px; padding: 96px 0 120px; }
+    .sidebar { position: sticky; top: 96px; align-self: start; }
+    .sidebar-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45);
+      padding-bottom: 14px; margin-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .sidebar-nav { display: flex; flex-direction: column; }
+    .sidebar-nav-item {
+      font-size: 13px; font-weight: 500; color: var(--ink-60);
+      padding: 12px 0 12px 16px;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .sidebar-nav-item a { color: inherit; display: block; }
+    .sidebar-nav-item:hover { color: var(--ink); }
+    .sidebar-nav-item.active { color: var(--ink); border-left-color: var(--leaf); font-weight: 700; }
+    .sidebar-num {
+      font-family: var(--font-display);
+      font-size: 10px; color: var(--ink-45);
+      margin-right: 10px; letter-spacing: 0.05em;
+    }
+    .sidebar-nav-item.active .sidebar-num { color: var(--ink); }
+
+    /* ══════════════════════════════════════════
+       CONTENT SECTIONS
+    ══════════════════════════════════════════ */
+    .content { display: flex; flex-direction: column; gap: 112px; }
+
+    .section-block { scroll-margin-top: 96px; }
+    .section-block-header {
+      margin-bottom: 28px;
+      padding-bottom: 28px; border-bottom: 1px solid var(--line);
+    }
+    .section-block-header-text { }
+    .section-block-header-text .eyebrow { margin-bottom: 14px; }
+    .section-block h2 { margin-top: 6px; max-width: 720px; }
+    .section-lead {
+      font-size: 16px; color: var(--ink-60); line-height: 1.5;
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+
+    /* Report two-column layout */
+    .report-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .report-layout.reverse .report-info { order: 2; }
+    .report-layout.reverse .report-mock-wrap { order: 1; }
+
+    .report-info { display: flex; flex-direction: column; }
+
+    /* Meta grid */
+    .report-meta {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      margin-bottom: 32px;
+    }
+    .report-meta-item {
+      padding: 18px 22px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+    .report-meta-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45); margin-bottom: 8px;
+    }
+    .report-meta-value {
+      font-family: var(--font-body);
+      font-size: 13.5px; font-weight: 600; color: var(--ink);
+      line-height: 1.35;
+    }
+
+    /* Features list */
+    .report-subhead {
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-45);
+      margin-bottom: 18px;
+    }
+    .report-features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+    .report-features li {
+      font-size: 14px; color: var(--ink-60);
+      line-height: 1.5; padding-left: 26px; position: relative;
+    }
+    .report-features li::before {
+      content: ''; position: absolute;
+      left: 0; top: 8px;
+      width: 12px; height: 6px;
+      background: var(--leaf);
+    }
+    .report-features li:nth-child(3n+2)::before { background: var(--sky); }
+    .report-features li:nth-child(3n)::before { background: var(--sand); }
+    .report-features li strong { color: var(--ink); font-weight: 700; }
+
+    .report-cta-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; color: var(--ink);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+    .report-cta-link::after { content: '→'; transition: transform 0.18s; }
+    .report-cta-link:hover::after { transform: translateX(3px); }
+
+    /* ══════════════════════════════════════════
+       MOCKS — brand-toned
+    ══════════════════════════════════════════ */
+    .report-mock-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* — MOCK 01: Cover — */
+    .mock-cover {
+      width: 100%;
+      max-width: 460px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      position: relative;
+      aspect-ratio: 1 / 1.32;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: 0 30px 60px -30px rgba(0,8,8,0.18), 0 8px 20px -10px rgba(0,8,8,0.08);
+    }
+    .mock-cover-top {
+      padding: 36px 32px 0;
+      flex: 0 0 auto;
+    }
+    .mock-cover-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--ink-45);
+      margin-bottom: 14px;
+    }
+    .mock-cover-title {
+      font-family: var(--font-display);
+      font-size: 2.4rem; font-weight: 700; line-height: 0.96;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    .mock-cover-title .lite { font-weight: 300; display: block; }
+    .mock-cover-body {
+      padding: 32px;
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: flex-end;
+      position: relative; z-index: 1;
+    }
+    .mock-cover-disclaimer {
+      font-size: 11px; color: var(--ink-60); line-height: 1.5;
+      max-width: 280px;
+      margin-bottom: 20px;
+    }
+    .mock-cover-meta {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--ink-45);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .mock-cover-art {
+      position: absolute;
+      right: -40px; bottom: 84px;
+      width: 260px; height: 260px;
+      background: url('assets/3d/prism-double-triangle.png') center / contain no-repeat;
+      opacity: 0.92;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .mock-cover-accent {
+      position: absolute; left: 0; top: 0;
+      width: 4px; height: 100px;
+      background: var(--leaf);
+    }
+    .mock-cover-footer {
+      border-top: 1px solid var(--line);
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--paper);
+      flex: 0 0 auto;
+      z-index: 1;
+    }
+    .mock-cover-footer-logo {
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .mock-cover-footer-logo .mark { width: 18px; height: 18px; color: var(--ink); }
+    .mock-cover-footer-logo .word {
+      font-family: var(--font-display);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0; text-transform: uppercase;
+    }
+    .mock-cover-footer-logo .word .light { font-weight: 300; }
+    .mock-cover-footer-sub {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--ink-45);
+      text-transform: uppercase;
+    }
+
+    /* — MOCK 02: Profile bars — */
+    .mock-profile {
+      width: 100%;
+      max-width: 480px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 60px -30px rgba(0,8,8,0.18), 0 8px 20px -10px rgba(0,8,8,0.08);
+      overflow: hidden;
+    }
+    .mock-profile-head {
+      padding: 18px 24px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 16px;
+    }
+    .mock-profile-head-title {
+      font-family: var(--font-display);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink); line-height: 1.3;
+    }
+    .mock-profile-head-logo {
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .mock-profile-head-logo .mark { width: 14px; height: 14px; color: var(--ink); }
+    .mock-profile-head-logo .word {
+      font-family: var(--font-display);
+      font-size: 11px; font-weight: 700; letter-spacing: 0; text-transform: uppercase;
+    }
+    .mock-profile-head-logo .word .light { font-weight: 300; }
+    .mock-profile-legend {
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--line);
+      display: flex; flex-wrap: wrap; gap: 14px;
+    }
+    .mock-profile-legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 9px; font-weight: 600; letter-spacing: 0.06em;
+      color: var(--ink-45); text-transform: uppercase;
+    }
+    .mock-profile-legend-swatch {
+      display: inline-flex; gap: 2px;
+    }
+    .mock-profile-legend-swatch span {
+      width: 14px; height: 8px;
+    }
+    .mock-profile-body {
+      padding: 18px 24px 20px;
+    }
+    .mock-profile-group { margin-bottom: 16px; }
+    .mock-profile-group:last-child { margin-bottom: 0; }
+    .mock-profile-group-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .mock-profile-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 4px;
+    }
+    .mock-profile-row-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--ink-60); text-transform: uppercase;
+      width: 108px; text-align: right; flex-shrink: 0;
+    }
+    .mock-profile-row-track {
+      flex: 1; display: flex; gap: 2px;
+    }
+    .mock-profile-row-track span {
+      height: 11px; width: 8.8%;
+    }
+    .mock-profile-row-val {
+      font-family: var(--font-display);
+      font-size: 11px; font-weight: 700; color: var(--ink);
+      width: 14px; text-align: right;
+      letter-spacing: -0.02em;
+    }
+    .mock-profile-foot {
+      padding: 10px 24px;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between;
+      font-size: 9px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--ink-45); text-transform: uppercase;
+    }
+
+    /* — MOCK 03: Team heatmap — */
+    .mock-team {
+      width: 100%;
+      max-width: 460px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 60px -30px rgba(0,8,8,0.18), 0 8px 20px -10px rgba(0,8,8,0.08);
+      overflow: hidden;
+    }
+    .mock-team-head {
+      background: var(--ink);
+      color: #fff;
+      padding: 16px 22px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .mock-team-head-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.55);
+    }
+    .mock-team-head-title {
+      font-family: var(--font-display);
+      font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .mock-team-body { padding: 22px 24px; }
+    .mock-team-sub {
+      font-size: 11px; color: var(--ink-60);
+      margin-bottom: 18px;
+    }
+    .mock-team-section-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .mock-team-heat {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
+      margin-bottom: 14px;
+    }
+    .mock-team-heat-cell { height: 24px; }
+    .mock-team-note {
+      font-size: 11px; color: var(--ink-60); line-height: 1.5;
+      padding: 12px 14px;
+      background: var(--paper-warm);
+      border-left: 2px solid var(--leaf);
+      margin-bottom: 18px;
+    }
+    .mock-team-note.sky { border-left-color: var(--sky); }
+    .mock-team-foot {
+      padding: 10px 24px;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between;
+      font-size: 9px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--ink-45); text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════════════
+       PRINCIPLES
+    ══════════════════════════════════════════ */
+    .principles {
+      background: var(--paper-warm);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 120px 0;
+      overflow: hidden;
+    }
+    .principles-head {
+      display: grid; grid-template-columns: 1fr 1fr auto;
+      gap: 56px; margin-bottom: 56px;
+      align-items: start;
+    }
+    .principles-head .copy {
+      font-size: 15.5px; color: var(--ink-60); line-height: 1.5;
+      max-width: 460px;
+      padding-top: 30px;
+    }
+    .principles-head .eyebrow { margin-bottom: 14px; display: inline-flex; }
+    .principles-head h2 { max-width: 720px; }
+    .principles-head h2 .lite { font-weight: 300; }
+
+    .principles-controls {
+      display: flex; gap: 10px;
+      padding-top: 38px;
+      align-self: start;
+    }
+    .principles-arrow {
+      width: 48px; height: 48px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      border-radius: 2px;
+    }
+    .principles-arrow:hover:not(:disabled) {
+      background: var(--ink); color: var(--paper); border-color: var(--ink);
+    }
+    .principles-arrow:disabled {
+      opacity: 0.32; cursor: not-allowed;
+    }
+    .principles-arrow svg { width: 16px; height: 16px; }
+
+    .principles-track-wrap {
+      position: relative;
+    }
+    .principles-track {
+      display: flex; gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 4px;
+    }
+    .principles-track::-webkit-scrollbar { display: none; }
+
+    .principle-card {
+      background: var(--paper);
+      padding: 36px 32px 32px;
+      border: 1px solid var(--line);
+      position: relative;
+      display: flex; flex-direction: column;
+      flex: 0 0 calc((100% - 48px) / 3);
+      min-height: 320px;
+      scroll-snap-align: start;
+    }
+    .principle-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0;
+      width: 56px; height: 3px;
+      background: var(--leaf);
+    }
+    .principle-card:nth-child(3n+2)::before { background: var(--sky); }
+    .principle-card:nth-child(3n)::before { background: var(--sand); }
+
+    .principle-icon {
+      width: 44px; height: 44px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--ink);
+      margin-bottom: 28px;
+      border: 1px solid var(--line);
+      background: var(--paper-warm);
+    }
+    .principle-icon svg { width: 24px; height: 24px; }
+    .principle-card:nth-child(3n+2) .principle-icon { color: var(--ink); }
+    .principle-card h3 {
+      font-family: var(--font-body);
+      font-size: 18px; font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 12px;
+      text-transform: none; letter-spacing: 0;
+      line-height: 1.3;
+    }
+    .principle-card p {
+      font-size: 14px; color: var(--ink-60);
+      line-height: 1.5;
+    }
+
+    /* ══════════════════════════════════════════
+       CTA BOTTOM
+    ══════════════════════════════════════════ */
+    .cta-bottom {
+      background: var(--ink); color: var(--paper);
+      padding: 96px 0;
+      position: relative; overflow: hidden;
+    }
+    .cta-bottom::before {
+      content: ''; position: absolute;
+      right: -40px; top: 50%; transform: translateY(-50%);
+      width: 380px; height: 380px;
+      background: url('assets/3d/prism-solid-tetra.png') center / contain no-repeat;
+      opacity: 0.95; pointer-events: none;
+    }
+    .cta-bottom .container { position: relative; z-index: 1; }
+    .cta-bottom-inner {
+      display: grid; grid-template-columns: 1.4fr auto;
+      gap: 48px; align-items: end;
+    }
+    .cta-bottom .eyebrow { color: rgba(255,255,255,0.45); margin-bottom: 18px; display: inline-flex; }
+    .cta-bottom h2 { color: var(--paper); max-width: 720px; }
+    .cta-bottom h2 .lite { font-weight: 300; }
+    .cta-bottom p { color: rgba(255,255,255,0.6); font-size: 16px; margin-top: 18px; max-width: 560px; line-height: 1.5; }
+    .cta-bottom-actions { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+    .cta-bottom-actions .btn { width: fit-content; }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    .footer {
+      background: var(--ink); color: var(--paper);
+      padding: 80px 0 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-inner {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 80px;
+    }
+    .footer-logo { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .footer-logo .mark { width: 32px; height: 32px; color: #fff; }
+    .footer-logo .word { color: #fff; font-size: 20px; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.4; max-width: 320px; }
+    .footer-col h4 { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 18px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,0.7); transition: color 0.15s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
+    .footer-legal { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.45); }
+    .footer-legal a:hover { color: #fff; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 1080px) {
+      .page-body { grid-template-columns: 1fr; gap: 32px; padding-top: 56px; }
+      .sidebar { display: none; }
+      .page-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .page-hero-art { max-width: 320px; justify-self: start; order: -1; }
+      .page-hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .report-layout { grid-template-columns: 1fr; gap: 36px; }
+      .report-layout.reverse .report-info { order: 2; }
+      .report-layout.reverse .report-mock-wrap { order: 1; }
+      .principles-head { grid-template-columns: 1fr; gap: 20px; }
+      .principles-head .copy { padding-top: 0; }
+      .principles-controls { padding-top: 0; }
+      .principle-card { flex: 0 0 calc((100% - 24px) / 2); }
+      .cta-bottom-inner { grid-template-columns: 1fr; align-items: start; }
+    }
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .page-hero { padding: 56px 0 48px; }
+      .page-hero-stats { grid-template-columns: 1fr; }
+
+      .principles { padding: 80px 0; }
+      .principle-card { flex: 0 0 86%; min-height: 280px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .mock-profile-row-label { width: 84px; }
+    }
+    @media (max-width: 600px) {
+      :root { --gutter: 20px; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .nav-cta .btn { padding: 10px 14px; font-size: 12px; }
+      .report-meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ INLINE SVG SYMBOLS ═══════════════════════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="era-mark" viewBox="0 0 200 200">
+      <g fill="currentColor">
+        <path d="M176.01 128.21v11.64c0 1.39-.98 3.1-2.19 3.79l-62.93 36.35c-1.2.7-3.17.7-4.38 0l-44.03-25.41c-1.2-.7-1.61-2.24-.9-3.44l13.85-23.29c.71-1.19 2.43-2.17 3.82-2.17h94.24c1.39 0 2.53 1.14 2.53 2.53z"/>
+        <path d="M104.26 62.53l-13.24-23.64c-.68-1.21-2.22-1.64-3.42-.94l-44.02 25.43c-1.2.7-2.19 2.4-2.19 3.79v72.68c0 1.39.99 3.1 2.19 3.79l10.08 5.82c1.2.7 2.76.28 3.45-.92l47.12-81.61c.7-1.2.71-3.18.03-4.39z"/>
+        <path d="M173.85 63.39l-62.96-36.35c-1.2-.7-3.17-.7-4.38 0l-10.08 5.82c-1.2.69-1.62 2.25-.92 3.45l47.12 81.61c.69 1.2 2.4 2.2 3.79 2.22l27.09.35c1.39.02 2.53-1.11 2.53-2.5v-50.82c0-1.39-.98-3.1-2.19-3.79z"/>
+      </g>
+    </symbol>
+    <symbol id="arr-ne" viewBox="0 0 14 14">
+      <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" fill="none"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<nav class="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="Главная страница.html" class="nav-logo">
+        <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
+        <span class="word wordmark">ЭРА<span class="light">ЛИДЕР</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="Главная страница.html">Главная</a></li>
+        <li><a href="Задачи.html">Задачи</a></li>
+        <li><a href="Методология.html">Методология</a></li>
+        <li><a href="Отчёты.html" class="active">Отчёты</a></li>
+        <li><a href="Сертификация.html">Сертификация</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="/contact" class="btn btn-primary">Связаться с нами <svg class="arr"><use href="#arr-ne"/></svg></a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ PAGE HERO ═══════════════════════════ -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-grid">
+      <div class="page-hero-left">
+        <div class="page-hero-eyebrow-row">
+          <div class="breadcrumb-pill">
+            <a href="Главная страница.html">Главная</a>
+            <span class="sep">/</span>
+            <span class="current">Отчёты</span>
+          </div>
+        </div>
+        <h1>Отчёт ЭРАЛИДЕР&nbsp;—<br/><span class="lite">это&nbsp;рабочий инструмент,<br/>а&nbsp;не&nbsp;папка в&nbsp;архиве</span></h1>
+        <p class="page-hero-lead">Пять форматов отчётов&nbsp;— под разные управленческие задачи и&nbsp;аудитории. Для&nbsp;CEO&nbsp;— полный отчёт, для&nbsp;HR-методолога&nbsp;— краткий, для&nbsp;руководителя&nbsp;— командный профиль с&nbsp;практическими выводами. Каждый формат разработан так, чтобы быстро выделять ключевые инсайты и&nbsp;поддерживать принятие решений.</p>
+      </div>
+      <div class="page-hero-art" aria-hidden="true">
+        <img src="assets/3d/prism-three-triangles.png" alt="" />
+      </div>
+    </div>
+
+    <div class="page-hero-stats">
+      <div class="page-hero-stat">
+        <div class="page-hero-stat-label">Форматов отчётов</div>
+        <div class="page-hero-stat-num">5</div>
+      </div>
+      <div class="page-hero-stat">
+        <div class="page-hero-stat-label">Полный отчёт</div>
+        <div class="page-hero-stat-num">&gt;30 страниц</div>
+      </div>
+      <div class="page-hero-stat">
+        <div class="page-hero-stat-label">Сводный отчёт</div>
+        <div class="page-hero-stat-num">2 страницы</div>
+      </div>
+      <div class="page-hero-stat">
+        <div class="page-hero-stat-label">Языки интерпретации</div>
+        <div class="page-hero-stat-num">RU</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ MAIN BODY ═══════════════════════════ -->
+<div class="container">
+  <div class="page-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Форматы</div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-item active"><a href="#full"><span class="sidebar-num">01</span>Индивидуальный полный</a></div>
+        <div class="sidebar-nav-item"><a href="#summary"><span class="sidebar-num">02</span>Сводный краткий</a></div>
+        <div class="sidebar-nav-item"><a href="#team"><span class="sidebar-num">03</span>Командный профиль</a></div>
+      </nav>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- 01 FULL -->
+      <section class="section-block" id="full">
+        <div class="section-block-header">
+          <div class="section-block-header-text">
+            <span class="eyebrow">Формат 01 · Индивидуальный полный</span>
+            <h2>Индивидуальный<br/><span style="font-weight:300">полный отчёт</span></h2>
+          </div>
+        </div>
+        <p class="section-lead">Полная картина по&nbsp;одному руководителю: личность (6&nbsp;черт), стресс-поведение (11&nbsp;деструкторов), мотивация (8&nbsp;драйверов). Развёрнутая интерпретация до&nbsp;50&nbsp;страниц.</p>
+
+        <div class="report-layout">
+          <div class="report-info">
+            <div class="report-meta">
+              <div class="report-meta-item">
+                <div class="report-meta-label">Для кого</div>
+                <div class="report-meta-value">HR-методолог, эксперт ЭРАЛИДЕР, сам руководитель</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Объём</div>
+                <div class="report-meta-value">12–50 страниц</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Готовность</div>
+                <div class="report-meta-value">В&nbsp;течение пары минут после прохождения</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Используется</div>
+                <div class="report-meta-value">На&nbsp;сессии обратной связи + ИПР</div>
+              </div>
+            </div>
+
+            <div class="report-subhead">В&nbsp;этом отчёте</div>
+            <ul class="report-features">
+              <li><strong>Шкалы по&nbsp;80&nbsp;фасетам</strong>&nbsp;— детализация каждого фактора каждого блока опросника до&nbsp;уровня поддерживающих субшкал</li>
+              <li><strong>Сравнение с&nbsp;нормой</strong>&nbsp;— где находится профиль относительно руководителей в&nbsp;нормативной базе</li>
+              <li><strong>Раздел «Поведение под давлением»</strong>&nbsp;— прогнозы по&nbsp;11&nbsp;деструкторам с&nbsp;описанием триггеров</li>
+              <li><strong>Раздел «Что развивать»</strong>&nbsp;— конкретные бизнес-ориентированные рекомендации</li>
+            </ul>
+
+            <a href="https://media.era-lider.ru/otchety/era-primer-otcheta-lichnostnye-cherty.pdf" class="report-cta-link" target="_blank" rel="noopener">Пример отчёта (PDF)</a>
+          </div>
+
+          <div class="report-mock-wrap">
+            <div class="mock-cover">
+              <div class="mock-cover-accent"></div>
+              <div class="mock-cover-top">
+                <div class="mock-cover-tag">Отчёт</div>
+                <div class="mock-cover-title">Личностные<span class="lite">качества</span></div>
+              </div>
+              <div class="mock-cover-art"></div>
+              <div class="mock-cover-body">
+                <p class="mock-cover-disclaimer">Настоящий отчёт подлежит хранению и&nbsp;использованию в&nbsp;соответствии с&nbsp;требованиями о&nbsp;защите персональных данных и&nbsp;является достоверным в&nbsp;течение двух лет.</p>
+                <div class="mock-cover-meta">
+                  <span>Дата · 04.12.26</span>
+                  <span>Логин · 123456</span>
+                </div>
+              </div>
+              <div class="mock-cover-footer">
+                <div class="mock-cover-footer-logo">
+                  <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
+                  <span class="word">ЭРА<span class="light">ЛИДЕР</span></span>
+                </div>
+                <div class="mock-cover-footer-sub">Система диагностики</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 SUMMARY -->
+      <section class="section-block" id="summary">
+        <div class="section-block-header">
+          <div class="section-block-header-text">
+            <span class="eyebrow">Формат 02 · Сводный краткий</span>
+            <h2>Сводный<br/><span style="font-weight:300">краткий отчёт</span></h2>
+          </div>
+        </div>
+        <p class="section-lead">Пять страниц для&nbsp;HR-методолога или эксперта. Без академической детализации&nbsp;— только то, что&nbsp;нужно для&nbsp;принятия конкретного решения по&nbsp;конкретной позиции.</p>
+
+        <div class="report-layout reverse">
+          <div class="report-info">
+            <div class="report-meta">
+              <div class="report-meta-item">
+                <div class="report-meta-label">Для кого</div>
+                <div class="report-meta-value">HR, эксперт по&nbsp;оценке, нанимающий руководитель</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Объём</div>
+                <div class="report-meta-value">2&nbsp;страницы</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Время готовности</div>
+                <div class="report-meta-value">В&nbsp;течение суток после прохождения респондентом</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Используется</div>
+                <div class="report-meta-value">Подбор C-level, преемственность, развитие</div>
+              </div>
+            </div>
+
+            <div class="report-subhead">В&nbsp;этом отчёте</div>
+            <ul class="report-features">
+              <li><strong>Сводные блоки по&nbsp;всем шкалам</strong>&nbsp;— ключевые особенности профиля считываются опытным экспертом уже с&nbsp;первой страницы отчёта</li>
+              <li><strong>Комплексный портрет</strong>&nbsp;— ключевые мотиваторы, ресурсы и&nbsp;факторы, препятствующие эффективной работе, назначению, ротации</li>
+              <li><strong>Консолидация показателей в&nbsp;табличном виде</strong>&nbsp;— дополнительные возможности для&nbsp;моделирования различных конфигураций управленческой команды и&nbsp;формирования сводной аналитики по&nbsp;группе руководителей</li>
+            </ul>
+
+            <a href="/contact" class="report-cta-link">Пример отчёта (PDF)</a>
+          </div>
+
+          <div class="report-mock-wrap">
+            <div class="mock-profile">
+              <div class="mock-profile-head">
+                <div class="mock-profile-head-title">Профиль результатов<br/>по&nbsp;шкалам</div>
+                <div class="mock-profile-head-logo">
+                  <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
+                  <span class="word">ЭРА<span class="light">ЛИДЕР</span></span>
+                </div>
+              </div>
+              <div class="mock-profile-legend">
+                <div class="mock-profile-legend-item">
+                  <span class="mock-profile-legend-swatch">
+                    <span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span>
+                  </span>
+                  Низкие&nbsp;1–3
+                </div>
+                <div class="mock-profile-legend-item">
+                  <span class="mock-profile-legend-swatch">
+                    <span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span>
+                  </span>
+                  Средние&nbsp;4–7
+                </div>
+                <div class="mock-profile-legend-item">
+                  <span class="mock-profile-legend-swatch">
+                    <span style="background:#95bd99;"></span><span style="background:#95bd99;"></span><span style="background:#95bd99;"></span>
+                  </span>
+                  Высокие&nbsp;8–10
+                </div>
+              </div>
+              <div class="mock-profile-body">
+                <!-- ЛИЧНОСТНЫЕ ЧЕРТЫ — leaf -->
+                <div class="mock-profile-group">
+                  <div class="mock-profile-group-title">Личностные черты</div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Стрессоуст.</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#95bd99;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">8</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Сотрудничество</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#95bd99;"></span><span style="background:#95bd99;"></span><span style="background:#e5ebe6;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">9</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Общительность</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">3</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Организованность</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">5</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Новаторство</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#c5d8c8;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span><span style="background:#e5ebe6;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">7</div>
+                  </div>
+                </div>
+                <!-- ДЕСТРУКТИВНЫЕ СТРАТЕГИИ — sand -->
+                <div class="mock-profile-group">
+                  <div class="mock-profile-group-title">Деструктивные стратегии</div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Темпераментн.</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">4</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Нерешительн.</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">6</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Уступчивость</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#c2b79f;"></span><span style="background:#f3eee2;"></span><span style="background:#f3eee2;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">8</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Сдержанность</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#e8dec9;"></span><span style="background:#c2b79f;"></span><span style="background:#f3eee2;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">9</div>
+                  </div>
+                </div>
+                <!-- МОТИВАЦИОННЫЕ ДРАЙВЕРЫ — sky -->
+                <div class="mock-profile-group">
+                  <div class="mock-profile-group-title">Мотивационные драйверы</div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Люди</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">6</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Забота</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#98a7d5;"></span><span style="background:#e6e9f3;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">9</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Деньги</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">6</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Свобода</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">2</div>
+                  </div>
+                  <div class="mock-profile-row">
+                    <div class="mock-profile-row-label">Творчество</div>
+                    <div class="mock-profile-row-track">
+                      <span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#cad2e6;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span><span style="background:#e6e9f3;"></span>
+                    </div>
+                    <div class="mock-profile-row-val">6</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mock-profile-foot">
+                <span>Логин · JD48170325mi</span>
+                <span>Дата · 05.05.2026</span>
+                <span>Сводный · 01</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 TEAM -->
+      <section class="section-block" id="team">
+        <div class="section-block-header">
+          <div class="section-block-header-text">
+            <span class="eyebrow">Формат 03 · Командный профиль</span>
+            <h2>Командный<br/><span style="font-weight:300">профиль</span></h2>
+          </div>
+        </div>
+        <p class="section-lead">Не&nbsp;среднее арифметическое индивидуальных профилей, а&nbsp;карта взаимодействия. Где взаимные усиления, где конфликты на&nbsp;уровне ценностей, какие компетенции не&nbsp;покрыты.</p>
+
+        <div class="report-layout">
+          <div class="report-info">
+            <div class="report-meta">
+              <div class="report-meta-item">
+                <div class="report-meta-label">Для кого</div>
+                <div class="report-meta-value">Руководитель команды, HR&nbsp;BP</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Объём команды</div>
+                <div class="report-meta-value">6–25 человек</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Объём отчёта</div>
+                <div class="report-meta-value">От&nbsp;30&nbsp;страниц</div>
+              </div>
+              <div class="report-meta-item">
+                <div class="report-meta-label">Используется</div>
+                <div class="report-meta-value">Диагностика, трансформация, M&amp;A</div>
+              </div>
+            </div>
+
+            <div class="report-subhead">В&nbsp;этом отчёте</div>
+            <ul class="report-features">
+              <li><strong>Тепловая карта мотивационной конгруэнтности</strong>&nbsp;— по&nbsp;16&nbsp;драйверам сразу видно, где команда тянет в&nbsp;одну сторону, а&nbsp;где в&nbsp;разные</li>
+              <li><strong>Слепые зоны</strong>&nbsp;— какие ключевые компетенции не&nbsp;покрыты ни&nbsp;одним участником</li>
+              <li><strong>Карта потенциальных конфликтов</strong>&nbsp;— пары с&nbsp;высоким риском трения по&nbsp;ценностям</li>
+              <li><strong>Рекомендации по&nbsp;перераспределению ответственности</strong>&nbsp;— кто за&nbsp;что должен отвечать с&nbsp;учётом профилей</li>
+            </ul>
+
+            <a href="https://media.era-lider.ru/otchety/era-primer-komandnogo-otcheta.pdf" class="report-cta-link" target="_blank" rel="noopener">Пример отчёта (PDF)</a>
+          </div>
+
+          <div class="report-mock-wrap">
+            <div class="mock-team">
+              <div class="mock-team-head">
+                <div class="mock-team-head-tag">Отчёт · Команда</div>
+                <div class="mock-team-head-title">Командный профиль</div>
+              </div>
+              <div class="mock-team-body">
+                <div class="mock-team-sub">Команда снабжения · 12&nbsp;руководителей</div>
+
+                <div class="mock-team-section-title">Мотивационная конгруэнтность</div>
+                <div class="mock-team-heat">
+                  <div class="mock-team-heat-cell" style="background:#95bd99;"></div>
+                  <div class="mock-team-heat-cell" style="background:#aac9ad;"></div>
+                  <div class="mock-team-heat-cell" style="background:#d2e0d4;"></div>
+                  <div class="mock-team-heat-cell" style="background:#e8dec9;"></div>
+                  <div class="mock-team-heat-cell" style="background:#95bd99;"></div>
+                  <div class="mock-team-heat-cell" style="background:#cad2e6;"></div>
+                  <div class="mock-team-heat-cell" style="background:#aac9ad;"></div>
+                  <div class="mock-team-heat-cell" style="background:#95bd99;"></div>
+                  <div class="mock-team-heat-cell" style="background:#f0e8d6;"></div>
+                  <div class="mock-team-heat-cell" style="background:#bdd1bf;"></div>
+                  <div class="mock-team-heat-cell" style="background:#98a7d5;"></div>
+                  <div class="mock-team-heat-cell" style="background:#d2e0d4;"></div>
+                  <div class="mock-team-heat-cell" style="background:#cad2e6;"></div>
+                  <div class="mock-team-heat-cell" style="background:#d2e0d4;"></div>
+                  <div class="mock-team-heat-cell" style="background:#95bd99;"></div>
+                  <div class="mock-team-heat-cell" style="background:#c2b79f;"></div>
+                  <div class="mock-team-heat-cell" style="background:#aac9ad;"></div>
+                  <div class="mock-team-heat-cell" style="background:#95bd99;"></div>
+                </div>
+                <div class="mock-team-note">Команда демонстрирует высокую конгруэнтность по&nbsp;мотиватору «Забота о&nbsp;других» (9/12 участников) и&nbsp;сильный разрыв по&nbsp;«Свободе».</div>
+
+                <div class="mock-team-section-title">Слепые зоны</div>
+                <div class="mock-team-note sky">Ни&nbsp;один из&nbsp;участников не&nbsp;имеет высокого балла по&nbsp;мотиватору «Творчество». Это может ограничивать команду на&nbsp;этапе генерации новых решений.</div>
+              </div>
+              <div class="mock-team-foot">
+                <span>Стр. 7&nbsp;/&nbsp;18</span>
+                <span>ЭРАЛИДЕР · Команда</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ PRINCIPLES ═══════════════════════════ -->
+<section class="principles" id="principles">
+  <div class="container">
+    <div class="principles-head">
+      <div>
+        <span class="eyebrow">Принципы отчётов</span>
+        <h2>Что отличает отчёт ЭРАЛИДЕР<br/><span class="lite">от&nbsp;типового ассессмента</span></h2>
+      </div>
+      <p class="copy">Шесть рамок, в&nbsp;которых работает каждый отчёт ЭРАЛИДЕР&nbsp;— от&nbsp;языка интерпретации до&nbsp;нормативной базы.</p>
+      <div class="principles-controls">
+        <button class="principles-arrow" data-dir="-1" aria-label="Предыдущий" id="prnPrev">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"><path d="M10 3L4 8l6 5"/></svg>
+        </button>
+        <button class="principles-arrow" data-dir="1" aria-label="Следующий" id="prnNext">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"><path d="M6 3l6 5-6 5"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="principles-track-wrap">
+      <div class="principles-track" id="principlesTrack">
+        <div class="principle-card">
+          <div class="principle-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M13 3H4v9l8 8 9-9z"/>
+              <circle cx="8" cy="7" r="1.4" fill="currentColor"/>
+              <path d="M3 3l18 18" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <h3>Без ярлыков и&nbsp;категоризации</h3>
+          <p>Никаких «красный&nbsp;/ жёлтый&nbsp;/ зелёный», никаких «талантов&nbsp;/ середнячков&nbsp;/ балласта». Профиль&nbsp;— это система описания, а&nbsp;не&nbsp;приговор. Любой балл интерпретируется в&nbsp;контексте задачи и&nbsp;роли.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M3 5h18v11H9l-4 4v-4H3z"/>
+              <path d="M7 9h10M7 12h7"/>
+            </svg>
+          </div>
+          <h3>Язык, на&nbsp;котором можно говорить</h3>
+          <p>Отчёт написан так, чтобы его было показать самому руководителю без доработок. Никакой клинической терминологии, никаких «дисфункциональных паттернов»&nbsp;— рабочий язык менеджмента.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+              <path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>
+            </svg>
+          </div>
+          <h3>Сразу к&nbsp;рекомендациям</h3>
+          <p>Отчёт без «что с&nbsp;этим делать»&nbsp;— это не&nbsp;инструмент, а&nbsp;статистика. По&nbsp;каждой шкале&nbsp;— конкретные действия: что развивать в&nbsp;работе, какие задачи брать, какие&nbsp;— делегировать, на&nbsp;что обращать внимание.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M3 19h18"/>
+              <path d="M3 19c0-3 2-5 4-5s3 2 5 2 3-9 5-9 4 4 4 7"/>
+              <path d="M12 19V8"/>
+            </svg>
+          </div>
+          <h3>Привязка к&nbsp;российской норме</h3>
+          <p>Все показатели&nbsp;— на&nbsp;нормативной базе российских руководителей (более 3000 профилей). Не&nbsp;международный управленческий сегмент, а&nbsp;российский руководитель.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <rect x="7" y="3" width="14" height="14"/>
+              <rect x="3" y="7" width="14" height="14"/>
+            </svg>
+          </div>
+          <h3>Разные форматы&nbsp;— один контент</h3>
+          <p>Сводный краткий, полный, командный, профиль роли&nbsp;— это разные срезы одной и&nbsp;той&nbsp;же базы данных. Не&nbsp;разные тесты, а&nbsp;разные ракурсы. Ключевые факты не&nbsp;противоречат друг другу.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M12 3l8 3v5c0 5-4 9-8 10-4-1-8-5-8-10V6z"/>
+              <path d="M8.5 12l2.5 2.5L16 9.5"/>
+            </svg>
+          </div>
+          <h3>Защита от&nbsp;формальной интерпретации</h3>
+          <p>Отчёт работает в&nbsp;связке с&nbsp;сессией обратной связи. Только цифры&nbsp;— это диагноз без лечения. Только разговор&nbsp;— это субъективное мнение. Вместе&nbsp;— рабочий инструмент.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CTA BOTTOM ═══════════════════════════ -->
+<section class="cta-bottom">
+  <div class="container">
+    <div class="cta-bottom-inner">
+      <div>
+        <span class="eyebrow">Под вашу задачу</span>
+        <h2>Разработаем решение<br/><span class="lite">под ваши бизнес-задачи</span></h2>
+        <p>Опытные эксперты адаптируют подход с&nbsp;учётом целей проекта, отраслевой специфики и&nbsp;уровня управленческих ролей.</p>
+      </div>
+      <div class="cta-bottom-actions">
+        <a href="/contact" class="btn btn-glass btn-lg">Связаться с&nbsp;экспертом <svg class="arr"><use href="#arr-ne"/></svg></a>
+        <a href="Задачи.html" class="btn btn-glass btn-lg">Сценарии применения <svg class="arr"><use href="#arr-ne"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="Главная страница.html" class="footer-logo">
+          <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
+          <span class="word wordmark">ЭРА<span class="light">ЛИДЕР</span></span>
+        </a>
+        <p class="footer-tagline">Система оценки руководителей и&nbsp;команд.<br/>ООО «Оценка и&nbsp;исследование», Санкт-Петербург, 2026 © Все права защищены</p>
+      </div>
+      <div class="footer-col">
+        <h4>Продукт</h4>
+        <ul>
+          <li><a href="Задачи.html">Сценарии применения</a></li>
+          <li><a href="Методология.html">Методология</a></li>
+          <li><a href="Отчёты.html">Отчёты</a></li>
+          <li><a href="/about">Что такое ЭРАЛИДЕР</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Компания</h4>
+        <ul>
+          <li><a href="/cases">Кейсы</a></li>
+          <li><a href="/experts">Эксперты</a></li>
+          <li><a href="Сертификация.html">Сертификация</a></li>
+          <li><a href="/materials">Исследования</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="mailto:info@era-lider.ru">info@era-lider.ru</a></li>
+          <li><a href="tel:+74999388643">+7 (499) 938-86-43</a></li>
+          <li><a href="https://t.me/era_lider">Telegram: @era_lider</a></li>
+          <li><a href="https://max.ru/id7839137584_biz">МАХ</a></li>
+          <li><a href="https://rutube.ru/channel/57267315/">RUTUBE</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© ЭРАЛИДЕР, 2026 · Реестр РПО № 28543</div>
+      <div class="footer-legal">
+        <a href="/documents">Политика конфиденциальности</a>
+        <a href="/documents">Обработка ПДн</a>
+        <a href="/documents">Документация</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Principles slider
+  (function() {
+    const track = document.getElementById('principlesTrack');
+    const prev = document.getElementById('prnPrev');
+    const next = document.getElementById('prnNext');
+    if (!track || !prev || !next) return;
+
+    function step() {
+      const card = track.querySelector('.principle-card');
+      if (!card) return 320;
+      const styles = getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap || styles.gap) || 24;
+      return card.getBoundingClientRect().width + gap;
+    }
+    function update() {
+      const max = track.scrollWidth - track.clientWidth - 1;
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft >= max;
+    }
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left:  step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // Sidebar nav active state on scroll
+  (function() {
+    const sections = Array.from(document.querySelectorAll('.section-block, #principles'));
+    const navItems = Array.from(document.querySelectorAll('.sidebar-nav-item'));
+    if (!sections.length || !navItems.length) return;
+    const offset = 72 + 80;
+    function setActive(id) {
+      navItems.forEach(item => {
+        const link = item.querySelector('a');
+        item.classList.toggle('active', !!link && link.getAttribute('href') === '#' + id);
+      });
+    }
+    function update() {
+      const y = window.scrollY + offset;
+      let activeId = sections[0].id;
+      for (const s of sections) {
+        if (s.getBoundingClientRect().top + window.scrollY <= y) {
+          activeId = s.id;
+        } else {
+          break;
+        }
+      }
+      setActive(activeId);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
+</body>
+</html>
