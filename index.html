@@ -57,6 +57,7 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       overflow-x: hidden;
+      padding-top: 72px;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -142,7 +143,7 @@
 
     /* ── NAV ── */
     .nav {
-      position: sticky; top: 0; z-index: 90;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 90;
       background: rgba(255,255,255,0.86);
       backdrop-filter: saturate(140%) blur(14px);
       -webkit-backdrop-filter: saturate(140%) blur(14px);
@@ -418,7 +419,10 @@
       background: var(--paper);
       min-height: 360px;
       display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
+      transition: border-color 0.18s;
     }
+    .method-card:hover { border-color: var(--ink-45); }
     .method-card .accent-bar {
       position: absolute; top: 0; left: 0; right: 0; height: 4px;
     }
@@ -450,14 +454,13 @@
       font-size: 14px; color: var(--ink-60); line-height: 1.4;
       margin-bottom: 28px; max-width: 360px;
     }
-    .method-card a {
+    .method-card-more {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 12px; font-weight: 600; color: var(--ink);
       text-transform: uppercase; letter-spacing: 0.08em;
       margin-top: auto;
     }
-    .method-card a::after { content: '→'; }
-
+    .method-card-more::after { content: '→'; }
     /* ══════════════════════════════════════════
        CASE FLAGSHIP
     ══════════════════════════════════════════ */
@@ -727,6 +730,8 @@
     .cta-meta-icon svg { width: 16px; height: 16px; }
     .cta-meta-key { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45); min-width: 90px; }
     .cta-meta-val { color: var(--ink); font-weight: 500; }
+    .cta-meta-val a { color: var(--ink); font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--line); transition: border-color 0.15s; }
+    .cta-meta-val a:hover { border-color: var(--ink); }
 
     .cta-form {
       background: rgba(232, 232, 228, 0.30);
@@ -820,7 +825,54 @@
       .footer-inner { grid-template-columns: 1fr; }
       .nav-cta .btn { padding: 10px 14px; font-size: 12px; }
     }
-  </style>
+  
+    /* ─── POPUP MODAL ─── */
+    .era-popup-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.22s;
+    }
+    .era-popup-overlay.is-open { opacity: 1; pointer-events: auto; }
+    .era-popup-box {
+      background: var(--paper); position: relative;
+      padding: 48px 40px 40px; max-width: 480px; width: 100%;
+      transform: translateY(20px); transition: transform 0.22s;
+    }
+    .era-popup-overlay.is-open .era-popup-box { transform: translateY(0); }
+    .era-popup-close {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none; cursor: pointer;
+      font-size: 26px; line-height: 1; color: var(--ink-45);
+      padding: 4px 6px; transition: color 0.15s;
+    }
+    .era-popup-close:hover { color: var(--ink); }
+    .era-popup-heading {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 1.6rem; letter-spacing: -0.02em; text-transform: uppercase;
+      margin-bottom: 28px; color: var(--ink);
+    }
+    .era-popup-box .era-fg { margin-bottom: 18px; }
+    .era-popup-box .era-fg label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-60); margin-bottom: 8px;
+    }
+    .era-popup-box .era-fg input {
+      width: 100%; padding: 14px 0; border: 0;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-body); font-size: 15px;
+      background: transparent; color: var(--ink);
+      transition: border-color 0.15s; outline: none;
+    }
+    .era-popup-box .era-fg input::placeholder { color: var(--ink-30); }
+    .era-popup-box .era-fg input:focus { border-color: var(--ink); }
+    .era-popup-submit { width: 100%; justify-content: center; margin-top: 12px; }
+    .era-popup-note { font-size: 11px; color: var(--ink-45); margin-top: 18px; line-height: 1.4; }
+
+    </style>
 </head>
 <body>
 
@@ -862,14 +914,14 @@
         <span class="word wordmark">ЭРА<span class="light">ЛИДЕР</span></span>
       </a>
       <ul class="nav-links">
-        <li><a href="Главная страница.html" class="active">Главная</a></li>
-        <li><a href="Задачи.html">Задачи</a></li>
-        <li><a href="Методология.html">Методология</a></li>
-        <li><a href="Отчёты.html">Отчёты</a></li>
-        <li><a href="Сертификация.html">Сертификация</a></li>
+        <li><a href="/" class="active">Главная</a></li>
+        <li><a href="/tasks">Задачи</a></li>
+        <li><a href="/methodology">Методология</a></li>
+        <li><a href="/reports">Отчёты</a></li>
+        <li><a href="/certification">Сертификация</a></li>
       </ul>
       <div class="nav-cta">
-        <a href="#cta" class="btn btn-primary">Связаться с нами <svg class="arr"><use href="#arr-ne"/></svg></a>
+        <a href="#" class="btn btn-primary" data-popup>Запросить демо</a>
       </div>
     </div>
   </div>
@@ -894,7 +946,7 @@
         </p>
 
         <div class="hero-actions">
-          <a href="#cta" class="btn btn-primary btn-lg">Запросить демо-презентацию <svg class="arr"><use href="#arr-ne"/></svg></a>
+          <a href="#" class="btn btn-primary btn-lg" data-popup>Запросить демо-презентацию <svg class="arr"><use href="#arr-ne"/></svg></a>
           <a href="#how" class="btn btn-secondary btn-lg">Смотреть пример отчёта</a>
         </div>
       </div>
@@ -955,37 +1007,31 @@
         <div class="scenario-num">01</div>
         <div class="scenario-title">Подбор на C-level</div>
         <p class="scenario-desc">Назначить того, кто действительно справится. Объективно, без эффекта харизмы и «лояльности».</p>
-        <a href="/scenarios/csuite" class="more">Подробнее</a>
       </div>
       <div class="scenario-card" data-c="2">
         <div class="scenario-num">02</div>
         <div class="scenario-title">Преемники и кадровый резерв</div>
         <p class="scenario-desc">Увидеть всех HiPo, а не только громких. Собрать пул преемников на 3 года вперёд.</p>
-        <a href="/scenarios/successors" class="more">Подробнее</a>
       </div>
       <div class="scenario-card" data-c="3">
         <div class="scenario-num">03</div>
         <div class="scenario-title">Диагностика команды</div>
         <p class="scenario-desc">Понять, где зажимы и где ресурс. Увидеть команду как систему, а не как сумму анкет.</p>
-        <a href="/scenarios/team" class="more">Подробнее</a>
       </div>
       <div class="scenario-card" data-c="4">
         <div class="scenario-num">04</div>
         <div class="scenario-title">Слияния и поглощения, реструктуризация</div>
         <p class="scenario-desc">Решить, кто остаётся, а кто уходит. Собрать новую команду без политических потерь.</p>
-        <a href="/scenarios/mna" class="more">Подробнее</a>
       </div>
       <div class="scenario-card" data-c="5">
         <div class="scenario-num">05</div>
         <div class="scenario-title">Выгорание и риск ухода</div>
         <p class="scenario-desc">Распознать до, а не после заявления. Сохранить ключевых людей, пока не поздно.</p>
-        <a href="/scenarios/burnout" class="more">Подробнее</a>
       </div>
       <div class="scenario-card" data-c="6">
         <div class="scenario-num">06</div>
         <div class="scenario-title">Трансформация</div>
         <p class="scenario-desc">Собрать команду под новые задачи. Понять, кто потянет следующий этап, а кто уже не сможет.</p>
-        <a href="/scenarios/transformation" class="more">Подробнее</a>
       </div>
     </div>
   </div>
@@ -1056,30 +1102,30 @@
       <p class="copy">Не самооценка, а предикция поведения. Шестифакторная модель HEXACO, 16 мотиваторов Ричи-Мартин и Рисс, 11 стресс-деструкторов.</p>
     </div>
     <div class="method-cards">
-      <div class="method-card green">
+      <a href="/methodology#hexaco" class="method-card green">
         <div class="accent-bar"></div>
         <div class="method-card-label">Опросник 01 · Личность</div>
         <div class="method-card-title">Личностные черты</div>
         <p>Модель HEXACO добавляет к Big Five фактор Честности-Смирения — критичный в российской управленческой культуре.</p>
-        <a href="/methodology#hexaco">Подробнее</a>
+        <span class="method-card-more">Подробнее</span>
         <div class="method-card-count">6</div>
-      </div>
-      <div class="method-card blue">
+      </a>
+      <a href="/methodology#destructors" class="method-card blue">
         <div class="accent-bar"></div>
         <div class="method-card-label">Опросник 02 · Мотивация</div>
         <div class="method-card-title">Мотивационные драйверы</div>
         <p>Ричи-Мартин и Рисс — самая детальная шкала мотивации на рынке.</p>
-        <a href="/methodology#motivation">Подробнее</a>
+        <span class="method-card-more">Подробнее</span>
         <div class="method-card-count">16</div>
-      </div>
-      <div class="method-card rust">
+      </a>
+      <a href="/methodology#motivation" class="method-card rust">
         <div class="accent-bar"></div>
         <div class="method-card-label">Опросник 03 · Деструкторы</div>
         <div class="method-card-title">Стресс-поведение</div>
         <p>Что случается с руководителем «под давлением». Паттерны, которые не видны в интервью, но ломают команды.</p>
-        <a href="/methodology#destructors">Подробнее</a>
+        <span class="method-card-more">Подробнее</span>
         <div class="method-card-count">11</div>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -1134,10 +1180,6 @@
         <div class="case-result-label">Сокращение срока стратегических решений</div>
       </div>
     </div>
-
-    <div style="margin-top: 48px;">
-      <a href="/cases" class="btn btn-onDark btn-lg">Все кейсы <svg class="arr"><use href="#arr-ne"/></svg></a>
-    </div>
   </div>
 </section>
 
@@ -1171,7 +1213,6 @@
             <div class="case-stat-label">Индивидуальный план</div>
           </div>
         </div>
-        <span class="more">Подробнее о кейсе</span>
       </a>
       <a href="/cases/gpn-snabzhenie" class="case-card" data-c="b">
         <div class="case-card-tag">ГПН Снаб · Нефтегаз · b2b закупки</div>
@@ -1188,7 +1229,6 @@
             <div class="case-stat-label">Руководителей в оценке</div>
           </div>
         </div>
-        <span class="more">Подробнее о кейсе</span>
       </a>
     </div>
   </div>
@@ -1340,17 +1380,17 @@
           <div class="cta-meta-row">
             <span class="cta-meta-icon"><svg><use href="#i-mail"/></svg></span>
             <span class="cta-meta-key">Почта</span>
-            <span class="cta-meta-val">info@era-lider.ru</span>
+            <span class="cta-meta-val"><a href="mailto:info@era-lider.ru">info@era-lider.ru</a></span>
           </div>
           <div class="cta-meta-row">
             <span class="cta-meta-icon"><svg><use href="#i-phone"/></svg></span>
             <span class="cta-meta-key">Телефон</span>
-            <span class="cta-meta-val">+7 (499) 938-86-43</span>
+            <span class="cta-meta-val"><a href="tel:+74999388643">+7 (499) 938-86-43</a></span>
           </div>
           <div class="cta-meta-row">
             <span class="cta-meta-icon"><svg><use href="#i-tg"/></svg></span>
             <span class="cta-meta-key">Telegram</span>
-            <span class="cta-meta-val">@era_lider</span>
+            <span class="cta-meta-val"><a href="https://t.me/era_lider">@era_lider</a></span>
           </div>
         </div>
       </div>
@@ -1430,6 +1470,47 @@
     </div>
   </div>
 </footer>
+
+
+<!-- ─── POPUP MODAL ─── -->
+<div id="era-popup" class="era-popup-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="era-popup-title">
+  <div class="era-popup-box">
+    <button class="era-popup-close" aria-label="Закрыть">&#x2715;</button>
+    <div class="era-popup-heading" id="era-popup-title">Оставить заявку</div>
+    <div class="era-fg">
+      <label>Имя и фамилия</label>
+      <input type="text" placeholder="Иван Иванов" />
+    </div>
+    <div class="era-fg">
+      <label>Компания</label>
+      <input type="text" placeholder="ООО «Компания»" />
+    </div>
+    <div class="era-fg">
+      <label>Роль</label>
+      <input type="text" placeholder="Директор по персоналу" />
+    </div>
+    <div class="era-fg">
+      <label>Корпоративная почта</label>
+      <input type="email" placeholder="ivan@company.ru" />
+    </div>
+    <button class="btn btn-primary btn-lg era-popup-submit">Отправить</button>
+    <p class="era-popup-note">Нажимая кнопку, вы соглашаетесь с&nbsp;политикой обработки персональных данных и&nbsp;условиями рассылки материалов ЭРАЛИДЕР.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var ov = document.getElementById('era-popup');
+  if (!ov) return;
+  function open(){ ov.classList.add('is-open'); ov.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function close(){ ov.classList.remove('is-open'); ov.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+  document.querySelectorAll('[data-popup]').forEach(function(el){
+    el.addEventListener('click', function(e){ e.preventDefault(); open(); });
+  });
+  ov.querySelector('.era-popup-close').addEventListener('click', close);
+  ov.addEventListener('click', function(e){ if (e.target === ov) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+})();
+</script>
 
 </body>
 </html>

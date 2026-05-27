@@ -52,6 +52,7 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       overflow-x: clip;
+      padding-top: 72px;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -121,7 +122,7 @@
 
     /* ── NAV ── */
     .nav {
-      position: sticky; top: 0; z-index: 90;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 90;
       background: rgba(255,255,255,0.86);
       backdrop-filter: saturate(140%) blur(14px);
       -webkit-backdrop-filter: saturate(140%) blur(14px);
@@ -566,10 +567,9 @@
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       padding: 120px 0;
-      overflow: hidden;
     }
     .principles-head {
-      display: grid; grid-template-columns: 1fr 1fr auto;
+      display: grid; grid-template-columns: 1fr 1fr;
       gap: 56px; margin-bottom: 56px;
       align-items: start;
     }
@@ -582,42 +582,14 @@
     .principles-head h2 { max-width: 720px; }
     .principles-head h2 .lite { font-weight: 300; }
 
-    .principles-controls {
-      display: flex; gap: 10px;
-      padding-top: 38px;
-      align-self: start;
-    }
-    .principles-arrow {
-      width: 48px; height: 48px;
-      border: 1px solid var(--line);
-      background: var(--paper);
-      color: var(--ink);
-      display: inline-flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: all 0.18s ease;
-      border-radius: 2px;
-    }
-    .principles-arrow:hover:not(:disabled) {
-      background: var(--ink); color: var(--paper); border-color: var(--ink);
-    }
-    .principles-arrow:disabled {
-      opacity: 0.32; cursor: not-allowed;
-    }
-    .principles-arrow svg { width: 16px; height: 16px; }
+    .principles-controls { display: none; }
 
-    .principles-track-wrap {
-      position: relative;
-    }
+    .principles-track-wrap { position: relative; }
     .principles-track {
-      display: flex; gap: 24px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      padding-bottom: 4px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
     }
-    .principles-track::-webkit-scrollbar { display: none; }
 
     .principle-card {
       background: var(--paper);
@@ -625,9 +597,7 @@
       border: 1px solid var(--line);
       position: relative;
       display: flex; flex-direction: column;
-      flex: 0 0 calc((100% - 48px) / 3);
       min-height: 320px;
-      scroll-snap-align: start;
     }
     .principle-card::before {
       content: ''; position: absolute;
@@ -677,15 +647,13 @@
       opacity: 0.95; pointer-events: none;
     }
     .cta-bottom .container { position: relative; z-index: 1; }
-    .cta-bottom-inner {
-      display: grid; grid-template-columns: 1.4fr auto;
-      gap: 48px; align-items: end;
-    }
+    .cta-bottom-inner { display: block; }
     .cta-bottom .eyebrow { color: rgba(255,255,255,0.45); margin-bottom: 18px; display: inline-flex; }
-    .cta-bottom h2 { color: var(--paper); max-width: 720px; }
+    .cta-bottom-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+    .cta-bottom h2 { color: var(--paper); max-width: 720px; margin: 0; }
     .cta-bottom h2 .lite { font-weight: 300; }
     .cta-bottom p { color: rgba(255,255,255,0.6); font-size: 16px; margin-top: 18px; max-width: 560px; line-height: 1.5; }
-    .cta-bottom-actions { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+    .cta-bottom-actions { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; flex-shrink: 0; }
     .cta-bottom-actions .btn { width: fit-content; }
 
     /* ══════════════════════════════════════════
@@ -732,9 +700,9 @@
       .report-layout.reverse .report-mock-wrap { order: 1; }
       .principles-head { grid-template-columns: 1fr; gap: 20px; }
       .principles-head .copy { padding-top: 0; }
-      .principles-controls { padding-top: 0; }
-      .principle-card { flex: 0 0 calc((100% - 24px) / 2); }
-      .cta-bottom-inner { grid-template-columns: 1fr; align-items: start; }
+      .principles-track { grid-template-columns: repeat(2, 1fr); }
+      .cta-bottom-head { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .cta-bottom-actions { align-items: flex-start; }
     }
     @media (max-width: 900px) {
       .nav-links { display: none; }
@@ -742,7 +710,8 @@
       .page-hero-stats { grid-template-columns: 1fr; }
 
       .principles { padding: 80px 0; }
-      .principle-card { flex: 0 0 86%; min-height: 280px; }
+      .principles-track { grid-template-columns: 1fr; }
+      .principle-card { min-height: 280px; }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
       .mock-profile-row-label { width: 84px; }
     }
@@ -752,7 +721,55 @@
       .nav-cta .btn { padding: 10px 14px; font-size: 12px; }
       .report-meta { grid-template-columns: 1fr; }
     }
-  </style>
+  
+
+    /* ─── POPUP MODAL ─── */
+    .era-popup-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.22s;
+    }
+    .era-popup-overlay.is-open { opacity: 1; pointer-events: auto; }
+    .era-popup-box {
+      background: var(--paper); position: relative;
+      padding: 48px 40px 40px; max-width: 480px; width: 100%;
+      transform: translateY(20px); transition: transform 0.22s;
+    }
+    .era-popup-overlay.is-open .era-popup-box { transform: translateY(0); }
+    .era-popup-close {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none; cursor: pointer;
+      font-size: 26px; line-height: 1; color: var(--ink-45);
+      padding: 4px 6px; transition: color 0.15s;
+    }
+    .era-popup-close:hover { color: var(--ink); }
+    .era-popup-heading {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 1.6rem; letter-spacing: -0.02em; text-transform: uppercase;
+      margin-bottom: 28px; color: var(--ink);
+    }
+    .era-popup-box .era-fg { margin-bottom: 18px; }
+    .era-popup-box .era-fg label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-60); margin-bottom: 8px;
+    }
+    .era-popup-box .era-fg input {
+      width: 100%; padding: 14px 0; border: 0;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-body); font-size: 15px;
+      background: transparent; color: var(--ink);
+      transition: border-color 0.15s; outline: none;
+    }
+    .era-popup-box .era-fg input::placeholder { color: var(--ink-30); }
+    .era-popup-box .era-fg input:focus { border-color: var(--ink); }
+    .era-popup-submit { width: 100%; justify-content: center; margin-top: 12px; }
+    .era-popup-note { font-size: 11px; color: var(--ink-45); margin-top: 18px; line-height: 1.4; }
+
+    </style>
 </head>
 <body>
 
@@ -776,19 +793,19 @@
 <nav class="nav">
   <div class="container">
     <div class="nav-inner">
-      <a href="Главная страница.html" class="nav-logo">
+      <a href="/" class="nav-logo">
         <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
         <span class="word wordmark">ЭРА<span class="light">ЛИДЕР</span></span>
       </a>
       <ul class="nav-links">
-        <li><a href="Главная страница.html">Главная</a></li>
-        <li><a href="Задачи.html">Задачи</a></li>
-        <li><a href="Методология.html">Методология</a></li>
-        <li><a href="Отчёты.html" class="active">Отчёты</a></li>
-        <li><a href="Сертификация.html">Сертификация</a></li>
+        <li><a href="/">Главная</a></li>
+        <li><a href="/tasks">Задачи</a></li>
+        <li><a href="/methodology">Методология</a></li>
+        <li><a href="/reports" class="active">Отчёты</a></li>
+        <li><a href="/certification">Сертификация</a></li>
       </ul>
       <div class="nav-cta">
-        <a href="/contact" class="btn btn-primary">Связаться с нами <svg class="arr"><use href="#arr-ne"/></svg></a>
+        <a href="#" class="btn btn-primary" data-popup>Запросить демо</a>
       </div>
     </div>
   </div>
@@ -801,7 +818,7 @@
       <div class="page-hero-left">
         <div class="page-hero-eyebrow-row">
           <div class="breadcrumb-pill">
-            <a href="Главная страница.html">Главная</a>
+            <a href="/">Главная</a>
             <span class="sep">/</span>
             <span class="current">Отчёты</span>
           </div>
@@ -810,7 +827,7 @@
         <p class="page-hero-lead">Пять форматов отчётов&nbsp;— под разные управленческие задачи и&nbsp;аудитории. Для&nbsp;CEO&nbsp;— полный отчёт, для&nbsp;HR-методолога&nbsp;— краткий, для&nbsp;руководителя&nbsp;— командный профиль с&nbsp;практическими выводами. Каждый формат разработан так, чтобы быстро выделять ключевые инсайты и&nbsp;поддерживать принятие решений.</p>
       </div>
       <div class="page-hero-art" aria-hidden="true">
-        <img src="assets/3d/prism-three-triangles.png" alt="" />
+        <img src="assets/3d-v2/crystal-tetra-solid.png" alt="" />
       </div>
     </div>
 
@@ -965,7 +982,7 @@
           <div class="report-mock-wrap">
             <div class="mock-profile">
               <div class="mock-profile-head">
-                <div class="mock-profile-head-title">Профиль результатов<br/>по&nbsp;шкалам</div>
+                <div class="mock-profile-head-title">Профиль результатов<br/>по шкалам</div>
                 <div class="mock-profile-head-logo">
                   <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
                   <span class="word">ЭРА<span class="light">ЛИДЕР</span></span>
@@ -1297,14 +1314,16 @@
 <section class="cta-bottom">
   <div class="container">
     <div class="cta-bottom-inner">
-      <div>
-        <span class="eyebrow">Под вашу задачу</span>
-        <h2>Разработаем решение<br/><span class="lite">под ваши бизнес-задачи</span></h2>
-        <p>Опытные эксперты адаптируют подход с&nbsp;учётом целей проекта, отраслевой специфики и&nbsp;уровня управленческих ролей.</p>
-      </div>
-      <div class="cta-bottom-actions">
-        <a href="/contact" class="btn btn-glass btn-lg">Связаться с&nbsp;экспертом <svg class="arr"><use href="#arr-ne"/></svg></a>
-        <a href="Задачи.html" class="btn btn-glass btn-lg">Сценарии применения <svg class="arr"><use href="#arr-ne"/></svg></a>
+      <span class="eyebrow">Под вашу задачу</span>
+      <div class="cta-bottom-head">
+        <div>
+          <h2>Разработаем решение<br/><span class="lite">под ваши бизнес-задачи</span></h2>
+          <p>Опытные эксперты адаптируют подход с&nbsp;учётом целей проекта, отраслевой специфики и&nbsp;уровня управленческих ролей.</p>
+        </div>
+        <div class="cta-bottom-actions">
+          <a href="#" class="btn btn-glass btn-lg" data-popup>Связаться с&nbsp;экспертом</a>
+          <a href="/tasks" class="btn btn-glass btn-lg">Сценарии применения</a>
+        </div>
       </div>
     </div>
   </div>
@@ -1315,7 +1334,7 @@
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="Главная страница.html" class="footer-logo">
+        <a href="/" class="footer-logo">
           <svg class="mark" aria-hidden="true"><use href="#era-mark"/></svg>
           <span class="word wordmark">ЭРА<span class="light">ЛИДЕР</span></span>
         </a>
@@ -1324,9 +1343,9 @@
       <div class="footer-col">
         <h4>Продукт</h4>
         <ul>
-          <li><a href="Задачи.html">Сценарии применения</a></li>
-          <li><a href="Методология.html">Методология</a></li>
-          <li><a href="Отчёты.html">Отчёты</a></li>
+          <li><a href="/tasks">Сценарии применения</a></li>
+          <li><a href="/methodology">Методология</a></li>
+          <li><a href="/reports">Отчёты</a></li>
           <li><a href="/about">Что такое ЭРАЛИДЕР</a></li>
         </ul>
       </div>
@@ -1335,7 +1354,7 @@
         <ul>
           <li><a href="/cases">Кейсы</a></li>
           <li><a href="/experts">Эксперты</a></li>
-          <li><a href="Сертификация.html">Сертификация</a></li>
+          <li><a href="/certification">Сертификация</a></li>
           <li><a href="/materials">Исследования</a></li>
         </ul>
       </div>
@@ -1362,31 +1381,7 @@
 </footer>
 
 <script>
-  // Principles slider
-  (function() {
-    const track = document.getElementById('principlesTrack');
-    const prev = document.getElementById('prnPrev');
-    const next = document.getElementById('prnNext');
-    if (!track || !prev || !next) return;
 
-    function step() {
-      const card = track.querySelector('.principle-card');
-      if (!card) return 320;
-      const styles = getComputedStyle(track);
-      const gap = parseFloat(styles.columnGap || styles.gap) || 24;
-      return card.getBoundingClientRect().width + gap;
-    }
-    function update() {
-      const max = track.scrollWidth - track.clientWidth - 1;
-      prev.disabled = track.scrollLeft <= 1;
-      next.disabled = track.scrollLeft >= max;
-    }
-    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-    next.addEventListener('click', () => track.scrollBy({ left:  step(), behavior: 'smooth' }));
-    track.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  })();
 
   // Sidebar nav active state on scroll
   (function() {
@@ -1416,6 +1411,47 @@
     window.addEventListener('resize', update);
     update();
   })();
+</script>
+
+
+<!-- ─── POPUP MODAL ─── -->
+<div id="era-popup" class="era-popup-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="era-popup-title">
+  <div class="era-popup-box">
+    <button class="era-popup-close" aria-label="Закрыть">&#x2715;</button>
+    <div class="era-popup-heading" id="era-popup-title">Оставить заявку</div>
+    <div class="era-fg">
+      <label>Имя и фамилия</label>
+      <input type="text" placeholder="Иван Иванов" />
+    </div>
+    <div class="era-fg">
+      <label>Компания</label>
+      <input type="text" placeholder="ООО «Компания»" />
+    </div>
+    <div class="era-fg">
+      <label>Роль</label>
+      <input type="text" placeholder="Директор по персоналу" />
+    </div>
+    <div class="era-fg">
+      <label>Корпоративная почта</label>
+      <input type="email" placeholder="ivan@company.ru" />
+    </div>
+    <button class="btn btn-primary btn-lg era-popup-submit">Отправить</button>
+    <p class="era-popup-note">Нажимая кнопку, вы соглашаетесь с&nbsp;политикой обработки персональных данных и&nbsp;условиями рассылки материалов ЭРАЛИДЕР.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var ov = document.getElementById('era-popup');
+  if (!ov) return;
+  function open(){ ov.classList.add('is-open'); ov.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function close(){ ov.classList.remove('is-open'); ov.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+  document.querySelectorAll('[data-popup]').forEach(function(el){
+    el.addEventListener('click', function(e){ e.preventDefault(); open(); });
+  });
+  ov.querySelector('.era-popup-close').addEventListener('click', close);
+  ov.addEventListener('click', function(e){ if (e.target === ov) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+})();
 </script>
 
 </body>
