@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ЭРАЛИДЕР · Оценка для решений, где нельзя ошибиться</title>
+  <title>ЭРАЛИДЕР – оценка руководителей и команд</title>
   <meta name="description" content="Российский стандарт диагностики руководителей и команд. В реестре российского ПО №28543." />
-  <meta property="og:title" content="ЭРАЛИДЕР · Оценка для решений, где нельзя ошибиться" />
+  <meta property="og:title" content="ЭРАЛИДЕР – оценка руководителей и команд" />
   <meta property="og:description" content="Российский стандарт диагностики руководителей и команд. В реестре российского ПО №28543." />
   <meta property="og:locale" content="ru_RU" />
   <meta property="og:type" content="website" />
@@ -252,31 +252,6 @@
     }
     .hero-stat-num .unit { font-size: 0.55em; font-weight: 400; color: var(--ink-60); letter-spacing: 0; text-transform: none; }
     .hero-stat-label { font-size: 12px; color: var(--ink-60); line-height: 1.4; max-width: 220px; }
-
-    .hero-clients {
-      border-top: 1px solid var(--line);
-      display: grid; grid-template-columns: 200px 1fr; gap: 32px; align-items: center;
-      padding: 28px 0;
-    }
-    .hero-clients-label {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--ink-45);
-    }
-    .hero-clients-row {
-      display: block;
-    }
-    .hero-clients-row img {
-      width: 100%; height: auto; display: block;
-    }
-    .client-name {
-      font-family: var(--font-display);
-      font-weight: 700; font-size: 14px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--ink-60);
-      transition: color 0.15s;
-    }
-    .client-name:hover { color: var(--ink); }
 
     .scroll-cue { display: none; }
 
@@ -537,10 +512,6 @@
       background: var(--paper);
     }
     .case-card:hover { border-color: var(--ink); }
-    .case-card-tag {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--ink-45); margin-bottom: 18px;
-    }
     .case-card h3 { font-size: 26px; margin-bottom: 10px; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: -0.005em; }
     .case-card-type {
       font-size: 12px; font-weight: 600;
@@ -566,47 +537,6 @@
     .case-card .more { margin-top: auto; }
     .case-stat-num { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
     .case-stat-label { font-size: 12px; color: var(--ink-45); margin-top: 4px; }
-
-    /* ══════════════════════════════════════════
-       TEAM
-    ══════════════════════════════════════════ */
-    .team { background: #f4f4f2; position: relative; overflow: hidden; }
-    .team::before {
-      content: ''; position: absolute; right: -40px; top: 60px;
-      width: 380px; height: 380px;
-      background: url('assets/3d/prism-three-triangles.png') center / contain no-repeat;
-      opacity: 0.95; pointer-events: none;
-      z-index: 0;
-    }
-    .team .container { position: relative; z-index: 1; }
-    .team .section-head { grid-template-columns: 1fr; }
-    .team .section-head .title-stack { max-width: 720px; }
-    .dev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .dev-card {
-      background: var(--paper); padding: 32px 30px;
-      border: 1px solid var(--line);
-      display: flex; flex-direction: column;
-      min-height: 380px;
-    }
-    .dev-num {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--ink-45); margin-bottom: 28px;
-    }
-    .dev-avatar {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--line-soft);
-      display: inline-flex; align-items: center; justify-content: center;
-      font-family: var(--font-display); font-weight: 700; font-size: 18px;
-      color: var(--ink-60); margin-bottom: 22px;
-    }
-    .dev-name { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
-    .dev-title { font-size: 13px; color: var(--ink); font-weight: 600; margin-bottom: 4px; }
-    .dev-role { font-size: 13px; color: var(--ink-45); margin-bottom: 20px; line-height: 1.4; }
-    .dev-quote {
-      font-size: 14px; color: var(--ink-60);
-      line-height: 1.4; border-top: 1px solid var(--line);
-      padding-top: 20px; margin-top: auto;
-    }
 
     /* ══════════════════════════════════════════
        WHY
@@ -805,11 +735,9 @@
     @media (max-width: 900px) {
       .section-pad { padding: 80px 0; }
       .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 28px; }
-      .hero-clients { grid-template-columns: 1fr; gap: 16px; }
       .scenarios-grid { grid-template-columns: 1fr 1fr; }
       .method-cards { grid-template-columns: 1fr; }
       .case-results { grid-template-columns: repeat(2, 1fr); }
-      .dev-grid { grid-template-columns: 1fr; }
       .cases-grid { grid-template-columns: 1fr; }
       .why-inner { grid-template-columns: 1fr; gap: 40px; }
       .registry-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -921,7 +849,7 @@
         <li><a href="/era/certification">Сертификация</a></li>
       </ul>
       <div class="nav-cta">
-        <a href="#" class="btn btn-primary" data-popup>Запросить демо</a>
+        <a href="#" class="btn btn-primary" data-popup>Связаться с нами</a>
       </div>
     </div>
   </div>
@@ -946,7 +874,7 @@
         </p>
 
         <div class="hero-actions">
-          <a href="#" class="btn btn-primary btn-lg" data-popup>Запросить демо-презентацию <svg class="arr"><use href="#arr-ne"/></svg></a>
+          <a href="#" class="btn btn-primary btn-lg" data-popup>Запросить презентацию с ценами<svg class="arr"><use href="#arr-ne"/></svg></a>
           <a href="/era/reports#full" class="btn btn-secondary btn-lg">Смотреть пример отчёта</a>
         </div>
       </div>
@@ -966,24 +894,16 @@
           <div class="hero-stat-label">на рынке систем оценки руководителей и команд</div>
         </div>
         <div>
-          <div class="hero-stat-num">10K+</div>
+          <div class="hero-stat-num">5K</div>
           <div class="hero-stat-label">оценённых руководителей и специалистов</div>
         </div>
         <div>
-          <div class="hero-stat-num">5K+</div>
+          <div class="hero-stat-num">3K+</div>
           <div class="hero-stat-label">успешно реализованных проектов</div>
         </div>
         <div>
-          <div class="hero-stat-num">10+</div>
+          <div class="hero-stat-num">10</div>
           <div class="hero-stat-label">отраслей, в которых мы работаем</div>
-        </div>
-      </div>
-
-      <!-- Clients row -->
-      <div class="hero-clients">
-        <div class="hero-clients-label">Нас выбирают</div>
-        <div class="hero-clients-row">
-          <img src="assets/clients-strip.png" alt="Газпромнефть, ВТБ, Правительство Москвы, ЛСР, АБЗ-1, Корус Консалтинг, Энергосбыт+" />
         </div>
       </div>
 
@@ -1003,36 +923,36 @@
       <p class="copy">ЭРАЛИДЕР — не формальный тест. Каждый сценарий решает конкретную бизнес-задачу первого лица: от назначения преемника до диагностики команды перед трансформацией.</p>
     </div>
     <div class="scenarios-grid">
-      <div class="scenario-card" data-c="1">
+      <a href="/era/tasks#csuite" class="scenario-card" data-c="1">
         <div class="scenario-num">01</div>
-        <div class="scenario-title">Подбор на C-level</div>
+        <div class="scenario-title">Подбор топ-менеджеров</div>
         <p class="scenario-desc">Назначить того, кто действительно справится. Объективно, без эффекта харизмы и «лояльности».</p>
-      </div>
-      <div class="scenario-card" data-c="2">
+      </a>
+      <a href="/era/tasks#successors" class="scenario-card" data-c="2">
         <div class="scenario-num">02</div>
         <div class="scenario-title">Преемники и кадровый резерв</div>
         <p class="scenario-desc">Увидеть всех HiPo, а не только громких. Собрать пул преемников на 3 года вперёд.</p>
-      </div>
-      <div class="scenario-card" data-c="3">
+      </a>
+      <a href="/era/tasks#team" class="scenario-card" data-c="3">
         <div class="scenario-num">03</div>
         <div class="scenario-title">Диагностика команды</div>
         <p class="scenario-desc">Понять, где зажимы и где ресурс. Увидеть команду как систему, а не как сумму анкет.</p>
-      </div>
-      <div class="scenario-card" data-c="4">
+      </a>
+      <a href="/era/tasks#mna" class="scenario-card" data-c="4">
         <div class="scenario-num">04</div>
         <div class="scenario-title">Слияния и поглощения, реструктуризация</div>
         <p class="scenario-desc">Решить, кто остаётся, а кто уходит. Собрать новую команду без политических потерь.</p>
-      </div>
-      <div class="scenario-card" data-c="5">
+      </a>
+      <a href="/era/tasks#burnout" class="scenario-card" data-c="5">
         <div class="scenario-num">05</div>
         <div class="scenario-title">Выгорание и риск ухода</div>
         <p class="scenario-desc">Распознать до, а не после заявления. Сохранить ключевых людей, пока не поздно.</p>
-      </div>
-      <div class="scenario-card" data-c="6">
+      </a>
+      <a href="/era/tasks#transformation" class="scenario-card" data-c="6">
         <div class="scenario-num">06</div>
         <div class="scenario-title">Трансформация</div>
         <p class="scenario-desc">Собрать команду под новые задачи. Понять, кто потянет следующий этап, а кто уже не сможет.</p>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -1051,7 +971,7 @@
         <div class="step-num">01</div>
         <div class="step-content">
           <h3>Тестирование</h3>
-          <p>Три опросника: личность (HEXACO), мотивация (Ричи-Мартин, Рисс), стресс-поведение.</p>
+          <p>Три опросника: Личностные черты, Деструктивные стратегии, Мотивационные драйверы.</p>
         </div>
         <div class="step-time">40–60 минут</div>
       </div>
@@ -1099,32 +1019,32 @@
         <span class="eyebrow">Методологический фундамент</span>
         <h2>Три опросника —<br/><span style="font-weight:300">три измерения руководителя</span></h2>
       </div>
-      <p class="copy">Не самооценка, а предикция поведения. Шестифакторная модель HEXACO, 16 мотиваторов Ричи-Мартин и Рисс, 11 стресс-деструкторов.</p>
+      <p class="copy">Не самооценка, а предикция поведения. Шестифакторная модель личности, 11 стресс-деструкторов, 8  мотиваторов Ричи-Мартин и Рисс.</p>
     </div>
     <div class="method-cards">
       <a href="/era/methodology#hexaco" class="method-card green">
         <div class="accent-bar"></div>
         <div class="method-card-label">Опросник 01 · Личность</div>
         <div class="method-card-title">Личностные черты</div>
-        <p>Модель HEXACO добавляет к Big Five фактор Честности-Смирения — критичный в российской управленческой культуре.</p>
+        <p>Модель HEXACO добавляет к Большой пятерке фактор Честности-Смирения. Обладает уникальной предиктивной валидностью в отношении контрпродуктивного поведения на работе.</p>
         <span class="method-card-more">Подробнее</span>
         <div class="method-card-count">6</div>
       </a>
-      <a href="/era/methodology#destructors" class="method-card blue">
-        <div class="accent-bar"></div>
-        <div class="method-card-label">Опросник 02 · Мотивация</div>
-        <div class="method-card-title">Мотивационные драйверы</div>
-        <p>Ричи-Мартин и Рисс — самая детальная шкала мотивации на рынке.</p>
-        <span class="method-card-more">Подробнее</span>
-        <div class="method-card-count">16</div>
-      </a>
       <a href="/era/methodology#motivation" class="method-card rust">
         <div class="accent-bar"></div>
-        <div class="method-card-label">Опросник 03 · Деструкторы</div>
+        <div class="method-card-label">Опросник 02 · Деструкторы</div>
         <div class="method-card-title">Стресс-поведение</div>
         <p>Что случается с руководителем «под давлением». Паттерны, которые не видны в интервью, но ломают команды.</p>
         <span class="method-card-more">Подробнее</span>
         <div class="method-card-count">11</div>
+      </a>
+      <a href="/era/methodology#destructors" class="method-card blue">
+        <div class="accent-bar"></div>
+        <div class="method-card-label">Опросник 03 · Мотивация</div>
+        <div class="method-card-title">Мотивационные драйверы</div>
+        <p>Шкалы отобраны по принципу максимальной валидности для управленческого контекста.</p>
+        <span class="method-card-more">Подробнее</span>
+        <div class="method-card-count">8</div>
       </a>
     </div>
   </div>
@@ -1143,14 +1063,14 @@
         <div class="case-step-num">01</div>
         <div>
           <h3 style="width: 600px">CEO объявил об уходе. Четыре внутренних кандидата — и ни одного очевидного.</h3>
-          <p>Ключевой акционер дал 14 месяцев на transition. Внутри — четыре директора с сопоставимыми track record. Выбор по интуиции — риск на уровне всего холдинга. Нужна объективная матрица сравнения, включая зоны, которые не видны в квартальных отчётах.</p>
+          <p>Ключевой акционер дал 14 месяцев на передачу полномочий. Внутри — четыре директора с сопоставимыми управленческими достижениями. Выбор по интуиции — риск на уровне всего холдинга. Нужна объективная матрица сравнения, включая зоны, которые не видны в квартальных отчётах.</p>
         </div>
       </div>
       <div class="case-step">
         <div class="case-step-num">02</div>
         <div>
-          <h3 style="width: 600px">Оценка ЭРАЛИДЕР для всех четверых + executive assessment от экспертов.</h3>
-          <p>Индивидуальные профили HEXACO + мотивация + стресс-паттерны. Executive interview с каждым. Сведение в матрицу сравнения по восьми компетенциям CEO, включая устойчивость к давлению, готовность к непопулярным решениям, мотивационный профиль под масштаб задачи.</p>
+          <h3 style="width: 600px">Оценка ЭРАЛИДЕР для всех четырёх кандидатов и экспертная оценка управленческого потенциала.</h3>
+          <p>Индивидуальные профили по модели HEXACO, анализ мотивации и поведенческих реакций в стрессовых ситуациях. Глубинное интервью с каждым кандидатом. Результаты сведены в единую матрицу сравнения по восьми ключевым компетенциям генерального директора, включая устойчивость к давлению, готовность принимать непопулярные решения и соответствие мотивационного профиля масштабу стоящих задач.</p>
         </div>
       </div>
       <div class="case-step">
@@ -1165,7 +1085,7 @@
     <div class="case-results">
       <div class="case-result">
         <div class="case-result-num">0</div>
-        <div class="case-result-label">Ключевых уходов в C-level за период transition</div>
+        <div class="case-result-label">Ключевых уходов в C-level за период на передачи полномочий</div>
       </div>
       <div class="case-result">
         <div class="case-result-num">+18%</div>
@@ -1195,8 +1115,7 @@
     </div>
     <div class="cases-grid">
       <a href="/era/cases/abz-1" class="case-card" data-c="a">
-        <div class="case-card-tag">АБЗ-1 · Дорожное строительство · СПб</div>
-        <h3>Группа АБЗ-1</h3>
+        <h3>Дорожное строительство · СПб</h3>
         <div class="case-card-type">Развитие руководителя</div>
         <p class="case-card-quote"><span class="quote-text">Удалось составить объективную картину профессионального поведения руководителя — подчеркнули основные сильные стороны и зоны развития. Результаты легли в основу индивидуального плана развития.</span></p>
         <div class="case-card-stats">
@@ -1215,8 +1134,7 @@
         </div>
       </a>
       <a href="/era/cases/gpn-snabzhenie" class="case-card" data-c="b">
-        <div class="case-card-tag">ГПН Снаб · Нефтегаз · b2b закупки</div>
-        <h3>Газпромнефть Снабжение</h3>
+        <h3>Нефтегаз · b2b закупки</h3>
         <div class="case-card-type">Диагностика команды</div>
         <p class="case-card-quote"><span class="quote-text">Итоговые командные отчёты дали детальную характеристику каждой из команд. Выявлен потенциал и зоны роста, сформированы рекомендации по работе с каждым сотрудником и кросс-функциональному взаимодействию.</span></p>
         <div class="case-card-stats">
@@ -1230,45 +1148,6 @@
           </div>
         </div>
       </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════ TEAM ═══════════════════════════ -->
-<section class="team section-pad">
-  <div class="container">
-    <div class="section-head">
-      <div class="title-stack">
-        <span class="eyebrow">Архитекторы методологии</span>
-        <h2>За ЭРАЛИДЕР — люди,<br/><span style="font-weight:300">а не только алгоритмы</span></h2>
-      </div>
-    </div>
-
-    <div class="dev-grid">
-      <div class="dev-card">
-        <div class="dev-num">01 · Разработчик</div>
-        <div class="dev-avatar">НБ</div>
-        <div class="dev-name">Наталия Боровикова</div>
-        <div class="dev-title">К. п. н., руководитель методологии ЭРАЛИДЕР</div>
-        <div class="dev-role">Эксперт по оценке и развитию топ-менеджеров и команд первого уровня.</div>
-        <div class="dev-quote">«Когда речь идёт об оценке CEO, важны не только результаты, но и устойчивость выводов под давлением интересов акционеров. Ценность создаёт не сама метрика, а качество её интерпретации в диалоге с клиентом.»</div>
-      </div>
-      <div class="dev-card">
-        <div class="dev-num">02 · Разработчик</div>
-        <div class="dev-avatar">ЕБ</div>
-        <div class="dev-name">Екатерина Белоуско</div>
-        <div class="dev-title">Психометрик, эксперт по методологии и оценке</div>
-        <div class="dev-role">Психолог-психометрик, консультант по методологии и оценке персонала.</div>
-        <div class="dev-quote">«Деструкторы — это не диагноз, а карта. Что случится с руководителем, когда ресурс кончится. Знать это — значит успеть подстраховать.»</div>
-      </div>
-      <div class="dev-card">
-        <div class="dev-num">03 · Разработчик</div>
-        <div class="dev-avatar">СЛ</div>
-        <div class="dev-name">Светлана Лагутина</div>
-        <div class="dev-title">Ведущий эксперт по оценке руководителей</div>
-        <div class="dev-role">Консультант по оценке персонала и команд, эксперт по методологии, коуч.</div>
-        <div class="dev-quote">«Команда — не сумма анкет. Командный профиль ЭРАЛИДЕР показывает, где зажимы между людьми, и помогает перераспределить ответственность.»</div>
-      </div>
     </div>
   </div>
 </section>
@@ -1373,7 +1252,7 @@
     <div class="cta-inner">
       <div class="cta-text">
         <span class="eyebrow">Следующий шаг</span>
-        <h2 style="margin-top: 18px;">Получите презентацию<br/><span style="font-weight: 300;">с ценами на email</span></h2>
+        <h2 style="margin-top: 18px;">Получите презентацию<br/><span style="font-weight: 300;">с ценами на почту</span></h2>
         <p>Ответим в течение рабочего дня. Пришлём по запросу описание методологии, примеры отчётов и расчет стоимости под объём вашей команды.</p>
 
         <div class="cta-meta">
@@ -1395,8 +1274,8 @@
         </div>
       </div>
       <div class="cta-form">
-        <div class="form-title">Заявка на презентацию</div>
-        <p class="form-sub">Пришлём персональную презентацию с оценкой под вашу задачу.</p>
+        <div class="form-title">Заявка на консультацию</div>
+        <p class="form-sub">Оставьте заявку и мы свяжемся с Вами для уточнения запроса.</p>
         <div class="form-group">
           <label>Имя и фамилия</label>
           <input type="text" placeholder="Иван Иванов" />
